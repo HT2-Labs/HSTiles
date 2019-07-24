@@ -14,11 +14,14 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import makeStyles from "@material-ui/styles/makeStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import IconStar from "./IconStar";
+
+export const LAYOUT_SLIM = "layout_slim";
 
 interface IOverlay {
   title: string;
   subtitle: string;
-  icon: React.Component;
+  icon: React.ReactElement;
 }
 
 const Overlay = styled.div`
@@ -37,7 +40,9 @@ const Overlay = styled.div`
 `;
 
 interface ITileProps {
-  assigned?: boolean;
+  isAssigned?: boolean;
+  isRecommended?: boolean;
+  layout?: string;
   imagePath?: string;
   type: string;
   title: string;
@@ -52,7 +57,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: "relative" as "relative",
     "&:hover $overlay": {
       display: "flex"
-    }
+    },
+    width: 280
+    // height: 220
+  },
+  cardSlim: {
+    width: 180,
+    // height: 280,
+    "& $media": { paddingTop: "80% !important" }
   },
   media: {
     height: 0,
@@ -62,6 +74,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   overlay: {
     background: theme.palette.primary.main,
     color: "white"
+  },
+  overlayComplete: {
+    background: "green"
   },
   overlaySubtitle: {
     fontSize: "1.2em"
@@ -75,12 +90,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "8px 20px",
     color: theme.palette.primary.main
   },
-  infoButtonContainer: {
+  infoButtonContainer: props => ({
     position: "absolute" as "absolute",
     left: 0,
     right: 0,
-    bottom: 86
-  },
+    bottom: props.layout === LAYOUT_SLIM ? 120 : 86
+  }),
   infoButton: {
     position: "relative" as "relative",
     left: 230,
@@ -105,24 +120,47 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   progressBar: {
     marginTop: 10
+  },
+  progressBarComplete: {
+    background: "green"
   }
 }));
 
 export const Tile = (props: ITileProps) => {
-  const classes = useStyles();
+  const { layout } = props;
+  const classes = useStyles({ layout });
   return (
-    <Card className={classes.card}>
+    <Card
+      className={
+        props.layout === LAYOUT_SLIM
+          ? `${classes.card} ${classes.cardSlim}`
+          : classes.card
+      }
+    >
       <CardActionArea onClick={props.onClickTile}>
         {props.imagePath && (
           <CardMedia image={props.imagePath} className={classes.media}>
-            {props.assigned && (
+            {props.isAssigned && (
               <Typography className={classes.assigned}>
                 <Label />
                 Assigned
               </Typography>
             )}
+            {props.isRecommended && (
+              <Typography className={classes.assigned}>
+                <IconStar />
+                Recommended
+              </Typography>
+            )}
             {props.overlay && (
-              <Overlay className={classes.overlay}>
+              <Overlay
+                className={
+                  props.progress === 100
+                    ? `${classes.overlay} ${classes.overlayComplete}`
+                    : classes.overlay
+                }
+              >
+                {props.overlay.icon}
                 <Typography>{props.overlay.title}</Typography>
                 <Typography className={classes.overlaySubtitle}>
                   {props.overlay.subtitle}
@@ -133,16 +171,24 @@ export const Tile = (props: ITileProps) => {
         )}
         <CardContent className={classes.cardContent}>
           <Typography className={classes.typeText}>
-            <TextTruncate line={2} truncateText="…" text={props.type} />
+            <TextTruncate line={1} truncateText="…" text={props.type} />
           </Typography>
           <Typography className={classes.titleText}>
-            <TextTruncate line={2} truncateText="…" text={props.title} />
+            <TextTruncate
+              line={props.layout === LAYOUT_SLIM ? 3 : 2}
+              truncateText="…"
+              text={props.title}
+            />
           </Typography>
           {props.progress !== null && (
             <LinearProgress
               variant="determinate"
               value={props.progress}
-              className={classes.progressBar}
+              className={
+                props.progress === 100
+                  ? `${classes.progressBar} ${classes.progressBarComplete}`
+                  : classes.progressBar
+              }
             />
           )}
         </CardContent>
