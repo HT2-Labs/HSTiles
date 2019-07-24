@@ -1,2 +1,0 @@
-# HSTiles
-Created with CodeSandbox
