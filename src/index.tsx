@@ -25,8 +25,12 @@ const makeTheme = (params: any) =>
 
 const Item = styled.div`
   margin-left: 24px;
-  margin-top: 24px;
   display: inline-block;
+`;
+
+const MyPlan = styled.div`
+  padding: 20px;
+  background: grey;
 `;
 
 const Slider = styled.div`
@@ -34,6 +38,7 @@ const Slider = styled.div`
   width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
+  padding: 10px;
 `;
 
 const SliderInner = styled.div`
@@ -58,15 +63,17 @@ function App() {
         }
       />
       <div dir={direction}>
-        <Slider>
-          <SliderInner>
-            {items.map(itemProps => (
-              <Item>
-                <Tile {...itemProps} />
-              </Item>
-            ))}
-          </SliderInner>
-        </Slider>
+        <MyPlan>
+          <Slider>
+            <SliderInner>
+              {items.map(itemProps => (
+                <Item>
+                  <Tile {...itemProps} />
+                </Item>
+              ))}
+            </SliderInner>
+          </Slider>
+        </MyPlan>
         <Slider>
           <SliderInner>
             {items.map(itemProps => {

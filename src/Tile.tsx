@@ -15,6 +15,7 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import IconStar from "./IconStar";
+import SvgIcon from "@material-ui/icons/Info";
 
 export const LAYOUT_SLIM = "layout_slim";
 
@@ -52,25 +53,24 @@ interface ITileProps {
   onClickInfo?: (event: React.MouseEvent) => void;
 }
 
+interface IStyleProps {
+  layout?: string;
+}
+
 const useStyles = makeStyles((theme: Theme) => ({
-  card: {
+  card: (props: IStyleProps) => ({
     position: "relative" as "relative",
     "&:hover $overlay": {
       display: "flex"
     },
-    width: 280
-    // height: 220
-  },
-  cardSlim: {
-    width: 180,
-    // height: 280,
-    "& $media": { paddingTop: "80% !important" }
-  },
-  media: {
+    border: "4px transparent",
+    width: props.layout === LAYOUT_SLIM ? 180 : 280
+  }),
+  media: (props: IStyleProps) => ({
     height: 0,
-    paddingTop: "42%",
+    paddingTop: props.layout === LAYOUT_SLIM ? "80%" : "40%",
     position: "relative" as "relative"
-  },
+  }),
   overlay: {
     background: theme.palette.primary.main,
     color: "white"
@@ -81,26 +81,30 @@ const useStyles = makeStyles((theme: Theme) => ({
   overlaySubtitle: {
     fontSize: "1.2em"
   },
-  assigned: {
-    fontSize: "1.2em",
+  status: {
+    fontSize: "1.0em",
     position: "absolute" as "absolute",
     textTransform: "uppercase" as "uppercase",
     bottom: 0,
     background: "white",
-    padding: "8px 20px",
+    padding: "4px 10px",
     color: theme.palette.primary.main
   },
-  infoButtonContainer: props => ({
+  statusIcon: {
+    width: 20,
+    height: 20
+  },
+  infoButtonContainer: (props: IStyleProps) => ({
     position: "absolute" as "absolute",
     left: 0,
     right: 0,
-    bottom: props.layout === LAYOUT_SLIM ? 120 : 86
+    bottom: props.layout === LAYOUT_SLIM ? 88 : 86
   }),
-  infoButton: {
+  infoButton: (props: IStyleProps) => ({
     position: "relative" as "relative",
-    left: 230,
-    right: 230
-  },
+    left: props.layout === LAYOUT_SLIM ? 130 : 230,
+    right: props.layout === LAYOUT_SLIM ? 130 : 230
+  }),
   infoIcon: {
     background: "white",
     "&:hover": {
@@ -130,25 +134,21 @@ export const Tile = (props: ITileProps) => {
   const { layout } = props;
   const classes = useStyles({ layout });
   return (
-    <Card
-      className={
-        props.layout === LAYOUT_SLIM
-          ? `${classes.card} ${classes.cardSlim}`
-          : classes.card
-      }
-    >
+    <Card className={classes.card}>
       <CardActionArea onClick={props.onClickTile}>
         {props.imagePath && (
           <CardMedia image={props.imagePath} className={classes.media}>
             {props.isAssigned && (
-              <Typography className={classes.assigned}>
-                <Label />
+              <Typography className={classes.status}>
+                <Label className={classes.statusIcon} />
                 Assigned
               </Typography>
             )}
             {props.isRecommended && (
-              <Typography className={classes.assigned}>
-                <IconStar />
+              <Typography className={classes.status}>
+                <SvgIcon className={classes.statusIcon}>
+                  <IconStar />
+                </SvgIcon>
                 Recommended
               </Typography>
             )}
