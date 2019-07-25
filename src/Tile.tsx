@@ -13,7 +13,7 @@ import Label from "@material-ui/icons/Label";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import makeStyles from "@material-ui/styles/makeStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import { Theme, useTheme } from "@material-ui/core/styles";
 import IconStar from "./IconStar";
 import SvgIcon from "@material-ui/icons/Info";
 
@@ -24,21 +24,6 @@ interface IOverlay {
   subtitle: string;
   icon: React.ReactElement;
 }
-
-const Overlay = styled.div`
-  position: absolute;
-  display: none;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  text-align: center;
-  align-items: center;
-`;
 
 interface ITileProps {
   isAssigned?: boolean;
@@ -57,27 +42,48 @@ interface IStyleProps {
   layout?: string;
 }
 
+const TileOverlay = styled.div`
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  color: white;
+  background-color: ${props => props.background};
+`;
+
+const TileCard = styled(({ layout, ...other }) => <Card {...other} />)`
+  position: relative;
+  width: ${(props: { layout: string }) =>
+    props.layout === LAYOUT_SLIM ? "180px" : "220px"};
+  &:hover .Tile_Overlay {
+    display: flex;
+  }
+`;
+
+const TileImage = styled(({ layout, ...other }) => <CardMedia {...other} />)`
+  height: 0;
+  padding-top: ${props => (props.layout === LAYOUT_SLIM ? "80%" : "40%")};
+  position: relative;
+`;
+
+const InfoButtonContainer = styled(({ layout, ...other }) => (
+  <div {...other} />
+))`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: ${props => (props.layout === LAYOUT_SLIM ? "88px" : "86px")};
+`;
+
 const useStyles = makeStyles((theme: Theme) => ({
-  card: (props: IStyleProps) => ({
-    position: "relative" as "relative",
-    "&:hover $overlay": {
-      display: "flex"
-    },
-    border: "4px transparent",
-    width: props.layout === LAYOUT_SLIM ? 180 : 280
-  }),
-  media: (props: IStyleProps) => ({
-    height: 0,
-    paddingTop: props.layout === LAYOUT_SLIM ? "80%" : "40%",
-    position: "relative" as "relative"
-  }),
-  overlay: {
-    background: theme.palette.primary.main,
-    color: "white"
-  },
-  overlayComplete: {
-    background: "green"
-  },
   overlaySubtitle: {
     fontSize: "1.2em"
   },
@@ -94,16 +100,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 20,
     height: 20
   },
-  infoButtonContainer: (props: IStyleProps) => ({
-    position: "absolute" as "absolute",
-    left: 0,
-    right: 0,
-    bottom: props.layout === LAYOUT_SLIM ? 88 : 86
-  }),
   infoButton: (props: IStyleProps) => ({
     position: "relative" as "relative",
-    left: props.layout === LAYOUT_SLIM ? 130 : 230,
-    right: props.layout === LAYOUT_SLIM ? 130 : 230
+    left: props.layout === LAYOUT_SLIM ? 130 : 170,
+    right: props.layout === LAYOUT_SLIM ? 130 : 170
   }),
   infoIcon: {
     background: "white",
@@ -133,11 +133,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const Tile = (props: ITileProps) => {
   const { layout } = props;
   const classes = useStyles({ layout });
+  const theme = useTheme();
+
   return (
-    <Card className={classes.card}>
+    <TileCard layout={layout}>
       <CardActionArea onClick={props.onClickTile}>
         {props.imagePath && (
-          <CardMedia image={props.imagePath} className={classes.media}>
+          <TileImage image={props.imagePath} layout={layout}>
             {props.isAssigned && (
               <Typography className={classes.status}>
                 <Label className={classes.statusIcon} />
@@ -153,11 +155,10 @@ export const Tile = (props: ITileProps) => {
               </Typography>
             )}
             {props.overlay && (
-              <Overlay
-                className={
-                  props.progress === 100
-                    ? `${classes.overlay} ${classes.overlayComplete}`
-                    : classes.overlay
+              <TileOverlay
+                className="Tile_Overlay"
+                background={
+                  props.progress === 100 ? "green" : theme.palette.primary.main
                 }
               >
                 {props.overlay.icon}
@@ -165,9 +166,9 @@ export const Tile = (props: ITileProps) => {
                 <Typography className={classes.overlaySubtitle}>
                   {props.overlay.subtitle}
                 </Typography>
-              </Overlay>
+              </TileOverlay>
             )}
-          </CardMedia>
+          </TileImage>
         )}
         <CardContent className={classes.cardContent}>
           <Typography className={classes.typeText}>
@@ -194,7 +195,7 @@ export const Tile = (props: ITileProps) => {
         </CardContent>
       </CardActionArea>
       {props.onClickInfo && (
-        <div className={classes.infoButtonContainer}>
+        <InfoButtonContainer layout={layout}>
           <IconButton
             onClick={props.onClickInfo}
             className={classes.infoButton}
@@ -202,9 +203,9 @@ export const Tile = (props: ITileProps) => {
           >
             <Info className={classes.infoIcon} />
           </IconButton>
-        </div>
+        </InfoButtonContainer>
       )}
-    </Card>
+    </TileCard>
   );
 };
 
