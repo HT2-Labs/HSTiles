@@ -42,6 +42,10 @@ interface IStyleProps {
   layout?: string;
 }
 
+interface ITileOverlayProps {
+  background: string;
+}
+
 const TileOverlay = styled.div`
   position: absolute;
   display: none;
@@ -56,13 +60,13 @@ const TileOverlay = styled.div`
   text-align: center;
   align-items: center;
   color: white;
-  background-color: ${props => props.background};
+  background-color: ${(props: ITileOverlayProps) => props.background};
 `;
 
 const TileCard = styled(({ layout, ...other }) => <Card {...other} />)`
   position: relative;
   width: ${(props: { layout: string }) =>
-    props.layout === LAYOUT_SLIM ? "180px" : "220px"};
+    props.layout === LAYOUT_SLIM ? "180px" : "350px"};
   &:hover .Tile_Overlay {
     display: flex;
   }
@@ -70,35 +74,55 @@ const TileCard = styled(({ layout, ...other }) => <Card {...other} />)`
 
 const TileImage = styled(({ layout, ...other }) => <CardMedia {...other} />)`
   height: 0;
-  padding-top: ${props => (props.layout === LAYOUT_SLIM ? "80%" : "40%")};
+  padding-top: ${props => (props.layout === LAYOUT_SLIM ? "60%" : "36%")};
   position: relative;
 `;
 
-const InfoButtonContainer = styled(({ layout, ...other }) => (
-  <div {...other} />
-))`
+const TileTitle = styled(({ layout, ...other }) => <Typography {...other} />)`
+  height: ${props => (props.layout === LAYOUT_SLIM ? "80px" : "50px")};
+  font-size: 1.4em;
+  font-weight: 600;
+`;
+
+const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: ${props => (props.layout === LAYOUT_SLIM ? "88px" : "86px")};
+  top: ${props => (props.layout === LAYOUT_SLIM ? "85px" : "102px")};
+  & .MuiIconButton-root {
+    position: relative;
+    left: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
+    right: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
+  }
+`;
+
+const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
+  position: absolute;
+  bottom: 0;
+  background: white;
+  padding: 4px 0 0 14px;
+  color: ${props => props.color};
+  & .MuiSvgIcon-root {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  & .MuiTypography-root {
+    position: relative;
+    top: -3px;
+    font-size: 1em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-right: 10px;
+  }
 `;
 
 const useStyles = makeStyles((theme: Theme) => ({
   overlaySubtitle: {
     fontSize: "1.2em"
-  },
-  status: {
-    fontSize: "1.0em",
-    position: "absolute" as "absolute",
-    textTransform: "uppercase" as "uppercase",
-    bottom: 0,
-    background: "white",
-    padding: "4px 10px",
-    color: theme.palette.primary.main
-  },
-  statusIcon: {
-    width: 20,
-    height: 20
   },
   infoButton: (props: IStyleProps) => ({
     position: "relative" as "relative",
@@ -141,18 +165,18 @@ export const Tile = (props: ITileProps) => {
         {props.imagePath && (
           <TileImage image={props.imagePath} layout={layout}>
             {props.isAssigned && (
-              <Typography className={classes.status}>
-                <Label className={classes.statusIcon} />
-                Assigned
-              </Typography>
+              <TileStatus color={theme.palette.primary.main}>
+                <Label />
+                <Typography>Assigned</Typography>
+              </TileStatus>
             )}
             {props.isRecommended && (
-              <Typography className={classes.status}>
-                <SvgIcon className={classes.statusIcon}>
+              <TileStatus color={theme.palette.primary.main}>
+                <SvgIcon>
                   <IconStar />
                 </SvgIcon>
-                Recommended
-              </Typography>
+                <Typography>Recommended</Typography>
+              </TileStatus>
             )}
             {props.overlay && (
               <TileOverlay
@@ -172,15 +196,15 @@ export const Tile = (props: ITileProps) => {
         )}
         <CardContent className={classes.cardContent}>
           <Typography className={classes.typeText}>
-            <TextTruncate line={1} truncateText="…" text={props.type} />
+            <TextTruncate line={3} truncateText="…" text={props.type} />
           </Typography>
-          <Typography className={classes.titleText}>
+          <TileTitle layout={layout}>
             <TextTruncate
               line={props.layout === LAYOUT_SLIM ? 3 : 2}
               truncateText="…"
               text={props.title}
             />
-          </Typography>
+          </TileTitle>
           {props.progress !== null && (
             <LinearProgress
               variant="determinate"
@@ -195,15 +219,11 @@ export const Tile = (props: ITileProps) => {
         </CardContent>
       </CardActionArea>
       {props.onClickInfo && (
-        <InfoButtonContainer layout={layout}>
-          <IconButton
-            onClick={props.onClickInfo}
-            className={classes.infoButton}
-            aria-label="Info"
-          >
+        <TileInfoButton layout={layout}>
+          <IconButton onClick={props.onClickInfo} aria-label="Info">
             <Info className={classes.infoIcon} />
           </IconButton>
-        </InfoButtonContainer>
+        </TileInfoButton>
       )}
     </TileCard>
   );

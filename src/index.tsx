@@ -1,12 +1,12 @@
 import * as React from "react";
 import { render } from "react-dom";
-
+import TextTruncate from "react-text-truncate";
 import styled from "styled-components";
 
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme, FormControlLabel } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
-import { ThemeProvider } from "@material-ui/styles";
+import { ThemeProvider, StylesProvider } from "@material-ui/styles";
 
 import Tile, { LAYOUT_SLIM } from "./Tile";
 import items from "./items";
@@ -14,6 +14,36 @@ import items from "./items";
 const makeTheme = (params: any) =>
   createMuiTheme({
     direction: params.direction,
+    shape: {
+      borderRadius: 3
+    },
+    typography: {
+      fontFamily: "Lato, sans-serif",
+      h1: {
+        fontSize: "1.8rem"
+      },
+      h2: {
+        fontSize: "1.5rem"
+      },
+      h3: {
+        fontSize: "1.2rem"
+      },
+      h4: {
+        fontSize: "1.2rem"
+      },
+      h5: {
+        fontSize: "1.2rem"
+      },
+      h6: {
+        fontSize: "1.5rem"
+      },
+      subtitle1: {
+        fontSize: "1.0rem"
+      },
+      subtitle2: {
+        fontSize: "1.0rem"
+      }
+    },
     overrides: {
       MuiCard: {
         root: {
@@ -24,17 +54,16 @@ const makeTheme = (params: any) =>
   });
 
 const Item = styled.div`
-  margin-left: 24px;
+  margin-right: 24px;
   display: inline-block;
 `;
 
 const MyPlan = styled.div`
-  padding: 20px;
+  padding: 10px;
   background: grey;
 `;
 
 const Slider = styled.div`
-  /* height: 280px; */
   width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -42,7 +71,7 @@ const Slider = styled.div`
 `;
 
 const SliderInner = styled.div`
-  min-width: 2000px;
+  min-width: 4000px;
 `;
 
 const LEFT_TO_RIGHT = "ltr";
@@ -53,40 +82,53 @@ function App() {
   const theme = makeTheme({ direction });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Typography>Right to Left:</Typography>
-      <Checkbox
-        onClick={() =>
-          setDirection(
-            direction === RIGHT_TO_LEFT ? LEFT_TO_RIGHT : RIGHT_TO_LEFT
-          )
-        }
-      />
-      <div dir={direction}>
-        <MyPlan>
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <FormControlLabel
+          value={RIGHT_TO_LEFT}
+          control={<Checkbox color="primary" />}
+          label="Right to Left"
+          onClick={() =>
+            setDirection(
+              direction === RIGHT_TO_LEFT ? LEFT_TO_RIGHT : RIGHT_TO_LEFT
+            )
+          }
+        />
+        <div
+          dir={direction}
+          style={{ background: "#efefef", padding: "10px 0" }}
+        >
+          <Typography variant="h1" gutterBottom>
+            My Plan
+          </Typography>
+          <MyPlan>
+            <Slider>
+              <SliderInner>
+                {items.map((itemProps, index) => (
+                  <Item key={index}>
+                    <Tile {...itemProps} />
+                  </Item>
+                ))}
+              </SliderInner>
+            </Slider>
+          </MyPlan>
+          <Typography variant="h2" gutterBottom>
+            My Awesome Focus Area
+          </Typography>
           <Slider>
             <SliderInner>
-              {items.map(itemProps => (
-                <Item>
-                  <Tile {...itemProps} />
-                </Item>
-              ))}
+              {items.map((itemProps, index) => {
+                return (
+                  <Item key={index}>
+                    <Tile layout={LAYOUT_SLIM} {...itemProps} />
+                  </Item>
+                );
+              })}
             </SliderInner>
           </Slider>
-        </MyPlan>
-        <Slider>
-          <SliderInner>
-            {items.map(itemProps => {
-              return (
-                <Item>
-                  <Tile layout={LAYOUT_SLIM} {...itemProps} />
-                </Item>
-              );
-            })}
-          </SliderInner>
-        </Slider>
-      </div>
-    </ThemeProvider>
+        </div>
+      </ThemeProvider>
+    </StylesProvider>
   );
 }
 

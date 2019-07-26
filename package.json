@@ -7,6 +7,8 @@
   "dependencies": {
     "@material-ui/core": "4.2.1",
     "@material-ui/icons": "4.2.1",
+    "@types/react-text-truncate": "0.14.0",
+    "@types/styled-components": "4.1.18",
     "lorem-ipsum": "2.0.3",
     "react": "16.8.4",
     "react-dom": "16.8.4",
