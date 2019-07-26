@@ -11,13 +11,26 @@ import IconButton from "@material-ui/core/IconButton";
 import Info from "@material-ui/icons/Info";
 import Label from "@material-ui/icons/Label";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import makeStyles from "@material-ui/styles/makeStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { Theme, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import IconStar from "./IconStar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 
 export const LAYOUT_SLIM = "layout_slim";
+export const LAYOUT_REGULAR = "layout_regular";
+
+const LAYOUTS = {
+  [LAYOUT_SLIM]: {
+    width: "180px",
+    imagePadding: "60%",
+    titleHeight: "65px"
+  },
+  [LAYOUT_REGULAR]: {
+    width: "350px",
+    imagePadding: "36%",
+    titleHeight: "40px"
+  }
+};
 
 interface IOverlay {
   title: string;
@@ -38,17 +51,14 @@ interface ITileProps {
   onClickInfo?: (event: React.MouseEvent) => void;
 }
 
-interface IStyleProps {
-  layout?: string;
-}
-
 interface ITileOverlayProps {
   background: string;
 }
 
 const TileOverlay = styled.div`
   position: absolute;
-  display: none;
+  display: flex;
+  opacity: 0;
   top: 0;
   right: 0;
   bottom: 0;
@@ -60,26 +70,28 @@ const TileOverlay = styled.div`
   text-align: center;
   align-items: center;
   color: white;
+  transition: opacity 1s;
   background-color: ${(props: ITileOverlayProps) => props.background};
 `;
 
 const TileCard = styled(({ layout, ...other }) => <Card {...other} />)`
   position: relative;
-  width: ${(props: { layout: string }) =>
-    props.layout === LAYOUT_SLIM ? "180px" : "350px"};
+  width: ${(props: { layout: string }) => LAYOUTS[props.layout].width};
   &:hover .Tile_Overlay {
     display: flex;
+    opacity: 1;
+    transition: opacity 0.1s;
   }
 `;
 
 const TileImage = styled(({ layout, ...other }) => <CardMedia {...other} />)`
   height: 0;
-  padding-top: ${props => (props.layout === LAYOUT_SLIM ? "60%" : "36%")};
+  padding-top: ${props => LAYOUTS[props.layout].imagePadding};
   position: relative;
 `;
 
 const TileTitle = styled(({ layout, ...other }) => <Typography {...other} />)`
-  height: ${props => (props.layout === LAYOUT_SLIM ? "65px" : "40px")};
+  height: ${props => LAYOUTS[props.layout].titleHeight};
   font-size: 1.4em;
   font-weight: 600;
   margin: 0px 0 16px 0;
@@ -114,7 +126,7 @@ const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
   bottom: 0;
   background: white;
   padding: 4px 0 0 14px;
-  // z-index: 99;
+  z-index: 99;
   color: ${props => props.color};
   & .MuiSvgIcon-root {
     width: 14px;
@@ -134,34 +146,8 @@ const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
   }
 `;
 
-const useStyles = makeStyles((theme: Theme) => ({
-  overlaySubtitle: {
-    fontSize: "1.2em"
-  },
-  infoIcon: {
-    background: "white",
-    "&:hover": {
-      background: "rgb(240, 240, 240)"
-    },
-    borderRadius: "50%"
-  },
-  cardContent: {
-    position: "relative" as "relative"
-  },
-  titleText: {
-    height: 50
-  },
-  progressBar: {
-    marginTop: 10
-  },
-  progressBarComplete: {
-    background: "green"
-  }
-}));
-
 export const Tile = (props: ITileProps) => {
   const { layout } = props;
-  const classes = useStyles({ layout });
   const theme = useTheme();
 
   return (
@@ -172,7 +158,7 @@ export const Tile = (props: ITileProps) => {
             {props.isAssigned && (
               <TileStatus color={theme.palette.primary.main}>
                 <Label />
-                <Typography>Assigned</Typography>
+                {layout !== LAYOUT_SLIM && <Typography>Assigned</Typography>}
               </TileStatus>
             )}
             {props.isRecommended && (
@@ -180,7 +166,7 @@ export const Tile = (props: ITileProps) => {
                 <SvgIcon>
                   <IconStar />
                 </SvgIcon>
-                <Typography>Recommended</Typography>
+                {layout !== LAYOUT_SLIM && <Typography>Recommended</Typography>}
               </TileStatus>
             )}
             {props.overlay && (
@@ -199,7 +185,7 @@ export const Tile = (props: ITileProps) => {
             )}
           </TileImage>
         )}
-        <CardContent className={classes.cardContent}>
+        <CardContent>
           <TileType variant="subtitle1">
             <TextTruncate
               line={1}
@@ -217,15 +203,7 @@ export const Tile = (props: ITileProps) => {
             />
           </TileTitle>
           {props.progress !== null && (
-            <LinearProgress
-              variant="determinate"
-              value={props.progress}
-              className={
-                props.progress === 100
-                  ? `${classes.progressBar} ${classes.progressBarComplete}`
-                  : classes.progressBar
-              }
-            />
+            <LinearProgress variant="determinate" value={props.progress} />
           )}
         </CardContent>
       </CardActionArea>

@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 import { ThemeProvider, StylesProvider } from "@material-ui/styles";
 
-import Tile, { LAYOUT_SLIM } from "./Tile";
+import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "./Tile";
 import { myPlanItems, items, moreItems } from "./items";
 
 const makeTheme = (params: any) =>
@@ -114,7 +114,7 @@ function App() {
               <SliderInner>
                 {myPlanItems.map((itemProps, index) => (
                   <Item key={index}>
-                    <Tile {...itemProps} />
+                    <Tile layout={LAYOUT_REGULAR} {...itemProps} />
                   </Item>
                 ))}
               </SliderInner>
