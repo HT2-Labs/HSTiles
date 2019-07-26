@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const IconStar = props => (
+export const IconStar = () => (
   <svg
     aria-hidden="true"
     focusable="false"

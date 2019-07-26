@@ -3,6 +3,7 @@ import { LoremIpsum } from "lorem-ipsum";
 
 import Launch from "@material-ui/icons/Launch";
 import IconCourse from "./IconCourse";
+import SvgIcon from "@material-ui/core/SvgIcon";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -52,13 +53,15 @@ const makeProps = (props?: any) => {
         props && props.overlay && props.overlay.icon ? (
           props.overlay.icon
         ) : (
-          <IconCourse />
+          <SvgIcon>
+            <IconCourse />
+          </SvgIcon>
         )
     }
   };
 };
 
-export const items = [
+export const myPlanItems = [
   makeProps({
     isAssigned: true,
     type: "Adapt Course",
@@ -90,9 +93,101 @@ export const items = [
   makeProps({
     title: "أنا أحب الكاري",
     type: "Video",
-    recommended: true,
+    isRecommended: true,
     imagePath:
       "data:image/png;base64,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"
+  })
+];
+
+export const items = [
+  makeProps({
+    isAssigned: true,
+    type: "Course",
+    progress: 0
+  }),
+  makeProps({
+    type: "Resource"
+  }),
+  makeProps({
+    isAssigned: true,
+    type: "Course",
+    progress: 10
+  }),
+  makeProps({
+    type: "Resource",
+    progress: 20
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Course",
+    progress: 0
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Resource",
+    progress: 0
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Resource",
+    progress: 20
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Course",
+    progress: 0
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Resource",
+    progress: 0
+  })
+];
+
+export const moreItems = [
+  makeProps({
+    isAssigned: true,
+    type: "Course",
+    progress: 0
+  }),
+  makeProps({
+    isAssigned: true,
+    type: "Resource"
+  }),
+  makeProps({
+    isAssigned: true,
+    type: "Course",
+    progress: 10
+  }),
+  makeProps({
+    type: "Resource",
+    isRecommended: true,
+    progress: 20
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Course",
+    progress: 0
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Resource",
+    progress: 0
+  }),
+  makeProps({
+    type: "Resource",
+    isRecommended: true,
+    progress: 20
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Course",
+    progress: 0
+  }),
+  makeProps({
+    isRecommended: true,
+    type: "Resource",
+    progress: 0
   })
 ];
 

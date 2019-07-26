@@ -15,7 +15,7 @@ import makeStyles from "@material-ui/styles/makeStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Theme, useTheme } from "@material-ui/core/styles";
 import IconStar from "./IconStar";
-import SvgIcon from "@material-ui/icons/Info";
+import SvgIcon from "@material-ui/core/SvgIcon";
 
 export const LAYOUT_SLIM = "layout_slim";
 
@@ -79,9 +79,10 @@ const TileImage = styled(({ layout, ...other }) => <CardMedia {...other} />)`
 `;
 
 const TileTitle = styled(({ layout, ...other }) => <Typography {...other} />)`
-  height: ${props => (props.layout === LAYOUT_SLIM ? "80px" : "50px")};
+  height: ${props => (props.layout === LAYOUT_SLIM ? "65px" : "40px")};
   font-size: 1.4em;
   font-weight: 600;
+  margin: 0px 0 16px 0;
 `;
 
 const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
@@ -101,22 +102,23 @@ const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
   bottom: 0;
   background: white;
   padding: 4px 0 0 14px;
+  // z-index: 99;
   color: ${props => props.color};
   & .MuiSvgIcon-root {
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     position: relative;
-    top: 2px;
+    top: 1px;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 8px;
   }
   & .MuiTypography-root {
     position: relative;
-    top: -3px;
+    top: -2px;
     font-size: 1em;
     text-transform: uppercase;
     display: inline-block;
-    margin-right: 10px;
+    margin-right: 8px;
   }
 `;
 
@@ -124,11 +126,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   overlaySubtitle: {
     fontSize: "1.2em"
   },
-  infoButton: (props: IStyleProps) => ({
-    position: "relative" as "relative",
-    left: props.layout === LAYOUT_SLIM ? 130 : 170,
-    right: props.layout === LAYOUT_SLIM ? 130 : 170
-  }),
   infoIcon: {
     background: "white",
     "&:hover": {
@@ -187,7 +184,7 @@ export const Tile = (props: ITileProps) => {
               >
                 {props.overlay.icon}
                 <Typography>{props.overlay.title}</Typography>
-                <Typography className={classes.overlaySubtitle}>
+                <Typography variant="subtitle2">
                   {props.overlay.subtitle}
                 </Typography>
               </TileOverlay>
@@ -195,9 +192,6 @@ export const Tile = (props: ITileProps) => {
           </TileImage>
         )}
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.typeText}>
-            <TextTruncate line={3} truncateText="…" text={props.type} />
-          </Typography>
           <TileTitle layout={layout}>
             <TextTruncate
               line={props.layout === LAYOUT_SLIM ? 3 : 2}
@@ -205,6 +199,9 @@ export const Tile = (props: ITileProps) => {
               text={props.title}
             />
           </TileTitle>
+          <Typography variant="subtitle1">
+            <TextTruncate line={3} truncateText="…" text={props.type} />
+          </Typography>
           {props.progress !== null && (
             <LinearProgress
               variant="determinate"

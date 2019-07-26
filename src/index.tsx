@@ -3,13 +3,13 @@ import { render } from "react-dom";
 import TextTruncate from "react-text-truncate";
 import styled from "styled-components";
 
-import { createMuiTheme, FormControlLabel } from "@material-ui/core";
+import { createMuiTheme, FormControlLabel, Link } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 import { ThemeProvider, StylesProvider } from "@material-ui/styles";
 
 import Tile, { LAYOUT_SLIM } from "./Tile";
-import items from "./items";
+import { myPlanItems, items, moreItems } from "./items";
 
 const makeTheme = (params: any) =>
   createMuiTheme({
@@ -38,10 +38,11 @@ const makeTheme = (params: any) =>
         fontSize: "1.5rem"
       },
       subtitle1: {
-        fontSize: "1.0rem"
+        fontSize: "0.7rem",
+        textTransform: "uppercase"
       },
       subtitle2: {
-        fontSize: "1.0rem"
+        fontSize: "0.75rem"
       }
     },
     overrides: {
@@ -104,7 +105,7 @@ function App() {
           <MyPlan>
             <Slider>
               <SliderInner>
-                {items.map((itemProps, index) => (
+                {myPlanItems.map((itemProps, index) => (
                   <Item key={index}>
                     <Tile {...itemProps} />
                   </Item>
@@ -113,11 +114,25 @@ function App() {
             </Slider>
           </MyPlan>
           <Typography variant="h2" gutterBottom>
-            My Awesome Focus Area
+            My Awesome Focus Area <Link>> View All</Link>
           </Typography>
           <Slider>
             <SliderInner>
               {items.map((itemProps, index) => {
+                return (
+                  <Item key={index}>
+                    <Tile layout={LAYOUT_SLIM} {...itemProps} />
+                  </Item>
+                );
+              })}
+            </SliderInner>
+          </Slider>
+          <Typography variant="h2" gutterBottom>
+            Recommended: Yet Another Awesome Focus Area <Link>> View All</Link>
+          </Typography>
+          <Slider>
+            <SliderInner>
+              {moreItems.map((itemProps, index) => {
                 return (
                   <Item key={index}>
                     <Tile layout={LAYOUT_SLIM} {...itemProps} />
