@@ -1,6 +1,5 @@
 import * as React from "react";
 import { render } from "react-dom";
-import TextTruncate from "react-text-truncate";
 import styled from "styled-components";
 
 import { createMuiTheme, FormControlLabel, Link } from "@material-ui/core";

@@ -100,6 +100,13 @@ const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
     left: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
     right: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
   }
+  & .MuiSvgIcon-root {
+    background: white;
+    & :hover {
+      background: rgb(240, 240, 240);
+    }
+    border-radius: 50%;
+  }
 `;
 
 const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
@@ -194,12 +201,18 @@ export const Tile = (props: ITileProps) => {
         )}
         <CardContent className={classes.cardContent}>
           <TileType variant="subtitle1">
-            <TextTruncate line={3} truncateText="…" text={props.type} />
+            <TextTruncate
+              line={1}
+              element="span"
+              truncateText="…"
+              text={props.type}
+            />
           </TileType>
           <TileTitle layout={layout}>
             <TextTruncate
               line={props.layout === LAYOUT_SLIM ? 3 : 2}
               truncateText="…"
+              element="span"
               text={props.title}
             />
           </TileTitle>
@@ -219,7 +232,7 @@ export const Tile = (props: ITileProps) => {
       {props.onClickInfo && (
         <TileInfoButton layout={layout}>
           <IconButton onClick={props.onClickInfo} aria-label="Info">
-            <Info className={classes.infoIcon} />
+            <Info />
           </IconButton>
         </TileInfoButton>
       )}
