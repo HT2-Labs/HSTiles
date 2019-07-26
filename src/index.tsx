@@ -23,7 +23,7 @@ const makeTheme = (params: any) =>
         fontSize: "1.8rem"
       },
       h2: {
-        fontSize: "1.5rem"
+        fontSize: "1.4rem"
       },
       h3: {
         fontSize: "1.2rem"
@@ -61,7 +61,14 @@ const Item = styled.div`
 
 const MyPlan = styled.div`
   padding: 10px;
-  background: grey;
+  background: #2f2f2f;
+  margin-bottom: 14px;
+  color: white;
+`;
+
+const FocusAreaStream = styled.div`
+  padding: 10px;
+  margin: 10px 0;
 `;
 
 const Slider = styled.div`
@@ -69,6 +76,7 @@ const Slider = styled.div`
   overflow-x: scroll;
   overflow-y: hidden;
   padding: 10px;
+  /* margin: 10px 0; */
 `;
 
 const SliderInner = styled.div`
@@ -99,10 +107,10 @@ function App() {
           dir={direction}
           style={{ background: "#efefef", padding: "10px 0" }}
         >
-          <Typography variant="h1" gutterBottom>
-            My Plan
-          </Typography>
           <MyPlan>
+            <Typography variant="h1" gutterBottom>
+              My Plan <Link style={{ color: "white" }}>> View All</Link>
+            </Typography>
             <Slider>
               <SliderInner>
                 {myPlanItems.map((itemProps, index) => (
@@ -113,34 +121,38 @@ function App() {
               </SliderInner>
             </Slider>
           </MyPlan>
-          <Typography variant="h2" gutterBottom>
-            My Awesome Focus Area <Link>> View All</Link>
-          </Typography>
-          <Slider>
-            <SliderInner>
-              {items.map((itemProps, index) => {
-                return (
-                  <Item key={index}>
-                    <Tile layout={LAYOUT_SLIM} {...itemProps} />
-                  </Item>
-                );
-              })}
-            </SliderInner>
-          </Slider>
-          <Typography variant="h2" gutterBottom>
-            Recommended: Yet Another Awesome Focus Area <Link>> View All</Link>
-          </Typography>
-          <Slider>
-            <SliderInner>
-              {moreItems.map((itemProps, index) => {
-                return (
-                  <Item key={index}>
-                    <Tile layout={LAYOUT_SLIM} {...itemProps} />
-                  </Item>
-                );
-              })}
-            </SliderInner>
-          </Slider>
+          <FocusAreaStream>
+            <Typography variant="h2" gutterBottom>
+              Change Management <Link>> View All</Link>
+            </Typography>
+            <Slider>
+              <SliderInner>
+                {items.map((itemProps, index) => {
+                  return (
+                    <Item key={index}>
+                      <Tile layout={LAYOUT_SLIM} {...itemProps} />
+                    </Item>
+                  );
+                })}
+              </SliderInner>
+            </Slider>
+          </FocusAreaStream>
+          <FocusAreaStream>
+            <Typography variant="h2" gutterBottom>
+              Recommended: Leadership Skills <Link>> View All</Link>
+            </Typography>
+            <Slider>
+              <SliderInner>
+                {moreItems.map((itemProps, index) => {
+                  return (
+                    <Item key={index}>
+                      <Tile layout={LAYOUT_SLIM} {...itemProps} />
+                    </Item>
+                  );
+                })}
+              </SliderInner>
+            </Slider>
+          </FocusAreaStream>
         </div>
       </ThemeProvider>
     </StylesProvider>

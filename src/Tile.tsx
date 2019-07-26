@@ -85,11 +85,16 @@ const TileTitle = styled(({ layout, ...other }) => <Typography {...other} />)`
   margin: 0px 0 16px 0;
 `;
 
+const TileType = styled(({ ...other }) => <Typography {...other} />)`
+  color: #6a6a6a;
+`;
+
 const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
   position: absolute;
   left: 0;
   right: 0;
   top: ${props => (props.layout === LAYOUT_SLIM ? "85px" : "102px")};
+  // bottom: 17px;
   & .MuiIconButton-root {
     position: relative;
     left: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
@@ -135,10 +140,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   cardContent: {
     position: "relative" as "relative"
-  },
-  typeText: {
-    fontSize: "1em",
-    textTransform: "uppercase" as "uppercase"
   },
   titleText: {
     height: 50
@@ -192,6 +193,9 @@ export const Tile = (props: ITileProps) => {
           </TileImage>
         )}
         <CardContent className={classes.cardContent}>
+          <TileType variant="subtitle1">
+            <TextTruncate line={3} truncateText="…" text={props.type} />
+          </TileType>
           <TileTitle layout={layout}>
             <TextTruncate
               line={props.layout === LAYOUT_SLIM ? 3 : 2}
@@ -199,9 +203,6 @@ export const Tile = (props: ITileProps) => {
               text={props.title}
             />
           </TileTitle>
-          <Typography variant="subtitle1">
-            <TextTruncate line={3} truncateText="…" text={props.type} />
-          </Typography>
           {props.progress !== null && (
             <LinearProgress
               variant="determinate"
