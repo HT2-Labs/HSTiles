@@ -15,6 +15,8 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { useTheme } from "@material-ui/core/styles";
 import IconStar from "./IconStar";
 import SvgIcon from "@material-ui/core/SvgIcon";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import curatrTheme from "./curatrTheme";
 
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
@@ -74,12 +76,29 @@ const TileOverlay = styled.div`
   background-color: ${(props: ITileOverlayProps) => props.background};
 `;
 
+const TileStatus = styled.div`
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+`;
+
 const TileCard = styled(({ layout, ...other }) => <Card {...other} />)`
   position: relative;
   width: ${(props: { layout: string }) => LAYOUTS[props.layout].width};
   &:hover .Tile_Overlay {
     display: flex;
-    opacity: 1;
+    opacity: 0.9;
     transition: opacity 0.1s;
   }
 `;
@@ -121,24 +140,26 @@ const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
   }
 `;
 
-const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
+const TileLabel = styled(({ color, ...other }) => <div {...other} />)`
   position: absolute;
-  bottom: 0;
-  background: white;
-  padding: 4px 0 0 14px;
-  z-index: 99;
+  bottom: 0px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 0 0 8px;
+  // border-radius: 50px;
   color: ${props => props.color};
+  // margin: 0 10px;
+  box-shadow: 0px 1px -3px 0px rgba(0, 0, 0, 0.2);
   & .MuiSvgIcon-root {
     width: 14px;
     height: 14px;
     position: relative;
-    top: 1px;
+    top: 0px;
     display: inline-block;
     margin-right: 8px;
   }
   & .MuiTypography-root {
     position: relative;
-    top: -2px;
+    top: -3px;
     font-size: 1em;
     text-transform: uppercase;
     display: inline-block;
@@ -149,31 +170,50 @@ const TileStatus = styled(({ color, ...other }) => <div {...other} />)`
 export const Tile = (props: ITileProps) => {
   const { layout } = props;
   const theme = useTheme();
+  let label = null;
+
+  if (props.isAssigned) {
+    label = {
+      color: theme.palette.primary.main,
+      icon: <Label />,
+      label: "Assigned"
+    };
+  } else if (props.isRecommended) {
+    label = {
+      color: theme.palette.primary.main,
+      icon: (
+        <SvgIcon>
+          <IconStar />
+        </SvgIcon>
+      ),
+      label: "Recommended"
+    };
+  }
 
   return (
     <TileCard layout={layout}>
       <CardActionArea onClick={props.onClickTile}>
         {props.imagePath && (
           <TileImage image={props.imagePath} layout={layout}>
-            {props.isAssigned && (
-              <TileStatus color={theme.palette.primary.main}>
-                <Label />
-                {layout !== LAYOUT_SLIM && <Typography>Assigned</Typography>}
+            {props.progress === 100 && (
+              <TileStatus>
+                <CheckCircle fontSize="large" aria-label="Completed" />
               </TileStatus>
             )}
-            {props.isRecommended && (
-              <TileStatus color={theme.palette.primary.main}>
-                <SvgIcon>
-                  <IconStar />
-                </SvgIcon>
-                {layout !== LAYOUT_SLIM && <Typography>Recommended</Typography>}
-              </TileStatus>
+            {label && (
+              <TileLabel color={label.color}>
+                {label.icon}
+                <Typography>{label.label}</Typography>
+              </TileLabel>
             )}
             {props.overlay && (
               <TileOverlay
                 className="Tile_Overlay"
+                aria-hidden="true"
                 background={
-                  props.progress === 100 ? "green" : theme.palette.primary.main
+                  props.progress === 100
+                    ? curatrTheme.complete
+                    : theme.palette.primary.main
                 }
               >
                 {props.overlay.icon}
@@ -202,7 +242,7 @@ export const Tile = (props: ITileProps) => {
               text={props.title}
             />
           </TileTitle>
-          {props.progress !== null && (
+          {props.progress !== null && !props.isRecommended && (
             <LinearProgress variant="determinate" value={props.progress} />
           )}
         </CardContent>

@@ -1,20 +1,22 @@
 import * as React from "react";
 import { render } from "react-dom";
-import styled from "styled-components";
 
-import { createMuiTheme, FormControlLabel, Link } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import { createMuiTheme, FormControlLabel, Container } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { ThemeProvider, StylesProvider } from "@material-ui/styles";
-
-import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "./Tile";
-import { myPlanItems, items, moreItems } from "./items";
+import curatrTheme from "./curatrTheme";
+import { lighten } from "@material-ui/core/styles";
+import Dashboard from "./Dashboard";
 
 const makeTheme = (params: any) =>
   createMuiTheme({
     direction: params.direction,
     shape: {
       borderRadius: 3
+    },
+    palette: {
+      primary: { main: curatrTheme.primary },
+      secondary: { main: curatrTheme.danger }
     },
     typography: {
       fontFamily: "Lato, sans-serif",
@@ -49,38 +51,20 @@ const makeTheme = (params: any) =>
         root: {
           borderRadius: 0
         }
+      },
+      MuiLinearProgress: {
+        root: {
+          background: curatrTheme.progress
+        },
+        colorPrimary: {
+          backgroundColor: lighten(curatrTheme.progress, 0.8)
+        },
+        barColorPrimary: {
+          backgroundColor: curatrTheme.progress
+        }
       }
     }
   });
-
-const Item = styled.div`
-  margin-right: 24px;
-  display: inline-block;
-`;
-
-const MyPlan = styled.div`
-  padding: 10px;
-  background: #2f2f2f;
-  margin-bottom: 14px;
-  color: white;
-`;
-
-const FocusAreaStream = styled.div`
-  padding: 10px;
-  margin: 10px 0;
-`;
-
-const Slider = styled.div`
-  width: 100%;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  padding: 10px;
-  /* margin: 10px 0; */
-`;
-
-const SliderInner = styled.div`
-  min-width: 4000px;
-`;
 
 const LEFT_TO_RIGHT = "ltr";
 const RIGHT_TO_LEFT = "rtl";
@@ -88,7 +72,6 @@ const RIGHT_TO_LEFT = "rtl";
 function App() {
   const [direction, setDirection] = React.useState(LEFT_TO_RIGHT);
   const theme = makeTheme({ direction });
-
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -102,57 +85,9 @@ function App() {
             )
           }
         />
-        <div
-          dir={direction}
-          style={{ background: "#efefef", padding: "10px 0" }}
-        >
-          <MyPlan>
-            <Typography variant="h1" gutterBottom>
-              My Plan <Link style={{ color: "white" }}>> View All</Link>
-            </Typography>
-            <Slider>
-              <SliderInner>
-                {myPlanItems.map((itemProps, index) => (
-                  <Item key={index}>
-                    <Tile layout={LAYOUT_REGULAR} {...itemProps} />
-                  </Item>
-                ))}
-              </SliderInner>
-            </Slider>
-          </MyPlan>
-          <FocusAreaStream>
-            <Typography variant="h2" gutterBottom>
-              Change Management <Link>> View All</Link>
-            </Typography>
-            <Slider>
-              <SliderInner>
-                {items.map((itemProps, index) => {
-                  return (
-                    <Item key={index}>
-                      <Tile layout={LAYOUT_SLIM} {...itemProps} />
-                    </Item>
-                  );
-                })}
-              </SliderInner>
-            </Slider>
-          </FocusAreaStream>
-          <FocusAreaStream>
-            <Typography variant="h2" gutterBottom>
-              Recommended: Leadership Skills <Link>> View All</Link>
-            </Typography>
-            <Slider>
-              <SliderInner>
-                {moreItems.map((itemProps, index) => {
-                  return (
-                    <Item key={index}>
-                      <Tile layout={LAYOUT_SLIM} {...itemProps} />
-                    </Item>
-                  );
-                })}
-              </SliderInner>
-            </Slider>
-          </FocusAreaStream>
-        </div>
+        <Container>
+          <Dashboard direction={direction} />
+        </Container>
       </ThemeProvider>
     </StylesProvider>
   );
