@@ -54,10 +54,6 @@ interface ITileProps {
   onClickInfo?: (event: React.MouseEvent) => void;
 }
 
-interface ITileOverlayProps {
-  background: string;
-}
-
 const TileOverlay = styled.div`
   position: absolute;
   display: flex;
@@ -69,12 +65,10 @@ const TileOverlay = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
-  text-align: center;
   align-items: center;
   color: white;
   transition: opacity 1s;
-  background-color: ${(props: ITileOverlayProps) => props.background};
+  background-color: ${(props: { background: string }) => props.background};
 `;
 
 const TileStatus = styled.div`
@@ -84,11 +78,8 @@ const TileStatus = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
-  text-align: center;
   align-items: center;
   color: white;
   background: rgba(0, 0, 0, 0.4);
@@ -104,6 +95,10 @@ const TileCard = styled(({ layout, glow, ...other }) => <Card {...other} />)`
     opacity: 0.9;
     transition: opacity 0.1s;
   }
+  &:hover .MuiCardMedia-root {
+    -webkit-filter: none;
+    filter: none;
+  }
   &:hover {
     transform: scale(1.05);
     transition: transform 0.5s;
@@ -115,10 +110,16 @@ const TileCard = styled(({ layout, glow, ...other }) => <Card {...other} />)`
   }
 `;
 
-const TileImage = styled(({ layout, ...other }) => <CardMedia {...other} />)`
+const TileImage = styled(({ greyscale, layout, ...other }) => (
+  <CardMedia {...other} />
+))`
   height: 0;
   padding-top: ${props => LAYOUTS[props.layout].imagePadding};
   position: relative;
+  // Known issue: This greyscale filter will not work in IE
+  ${props =>
+    props.greyscale &&
+    "-webkit-filter: grayscale(100%); filter: grayscale(100%);"}
 `;
 
 const TileTitle = styled(({ layout, ...other }) => <Typography {...other} />)`
@@ -206,7 +207,11 @@ export const Tile = (props: ITileProps) => {
     <TileCard layout={layout} glow={glow}>
       <CardActionArea onClick={props.onClickTile}>
         {props.imagePath && (
-          <TileImage image={props.imagePath} layout={layout}>
+          <TileImage
+            greyscale={props.progress === 100}
+            image={props.imagePath}
+            layout={layout}
+          >
             {props.progress === 100 && (
               <TileStatus>
                 <CheckCircle fontSize="large" aria-label="Completed" />
