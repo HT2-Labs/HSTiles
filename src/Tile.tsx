@@ -44,6 +44,7 @@ interface ITileProps {
   isAssigned?: boolean;
   isRecommended?: boolean;
   layout?: string;
+  glow?: boolean;
   imagePath?: string;
   type: string;
   title: string;
@@ -93,13 +94,24 @@ const TileStatus = styled.div`
   background: rgba(0, 0, 0, 0.4);
 `;
 
-const TileCard = styled(({ layout, ...other }) => <Card {...other} />)`
+const TileCard = styled(({ layout, glow, ...other }) => <Card {...other} />)`
   position: relative;
   width: ${(props: { layout: string }) => LAYOUTS[props.layout].width};
+  ${(props: { glow?: boolean }) =>
+    props.glow && "box-shadow: 0px 0px 8px 0px " + curatrTheme.primary + ";"};
   &:hover .Tile_Overlay {
     display: flex;
     opacity: 0.9;
     transition: opacity 0.1s;
+  }
+  &:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s;
+
+    // Remove animations for improved accessibility
+    @media (prefers-reduced-motion: reduce) {
+      transform: scale(1);
+    }
   }
 `;
 
@@ -168,7 +180,7 @@ const TileLabel = styled(({ color, ...other }) => <div {...other} />)`
 `;
 
 export const Tile = (props: ITileProps) => {
-  const { layout } = props;
+  const { layout, glow } = props;
   const theme = useTheme();
   let label = null;
 
@@ -191,7 +203,7 @@ export const Tile = (props: ITileProps) => {
   }
 
   return (
-    <TileCard layout={layout}>
+    <TileCard layout={layout} glow={glow}>
       <CardActionArea onClick={props.onClickTile}>
         {props.imagePath && (
           <TileImage image={props.imagePath} layout={layout}>
@@ -245,6 +257,7 @@ export const Tile = (props: ITileProps) => {
           {props.progress !== null && !props.isRecommended && (
             <LinearProgress variant="determinate" value={props.progress} />
           )}
+          {props.isRecommended && <div style={{ height: 5 }} />}
         </CardContent>
       </CardActionArea>
       {props.onClickInfo && (
