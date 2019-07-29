@@ -6,13 +6,15 @@ import {
   Drawer,
   CardMedia,
   CardContent,
-  Container
+  Container,
+  AppBar,
+  Toolbar
 } from "@material-ui/core";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
 const Item = styled.div`
-  margin-right: 24px;
+  margin: 10px;
   display: inline-block;
 `;
 
@@ -52,7 +54,8 @@ const Slider = styled.div`
   width: 100%;
   padding: 10px;
   position: relative;
-  left: -10px;
+  left: -20px;
+  right: -20px;
   overflow-x: scroll;
   overflow-y: hidden;
   ::-webkit-scrollbar {
@@ -70,6 +73,10 @@ const InfoDrawer = styled(({ ...other }) => <Drawer {...other} />)`
   & .MuiPaper-root {
     width: 350px;
   }
+`;
+
+const Header = styled(({ ...other }) => <AppBar {...other} />)`
+  background-color: #ffffff;
 `;
 
 export const Dashboard = ({ direction }) => {
@@ -93,6 +100,15 @@ export const Dashboard = ({ direction }) => {
           </CardContent>
         </InfoDrawer>
       )}
+      <Header position="static" color="default">
+        <Toolbar>
+          <Container>
+            <Typography variant="h6" color="inherit">
+              Search goes here
+            </Typography>
+          </Container>
+        </Toolbar>
+      </Header>
       <MyPlan>
         <Container>
           <Typography variant="h2" component="h1" gutterBottom>
