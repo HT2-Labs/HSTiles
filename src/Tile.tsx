@@ -133,6 +133,16 @@ const TileType = styled(({ ...other }) => <Typography {...other} />)`
   color: #6a6a6a;
 `;
 
+const ProgressBar = styled(({ completed, ...other }) => (
+  <LinearProgress {...other} />
+))`
+  ${props =>
+    props.completed &&
+    "& .MuiLinearProgress-barColorPrimary {background-color: " +
+      curatrTheme.complete +
+      "};"}
+`;
+
 const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
   position: absolute;
   left: 0;
@@ -260,7 +270,11 @@ export const Tile = (props: ITileProps) => {
             />
           </TileTitle>
           {props.progress !== null && !props.isRecommended && (
-            <LinearProgress variant="determinate" value={props.progress} />
+            <ProgressBar
+              variant="determinate"
+              completed={props.progress === 100}
+              value={props.progress}
+            />
           )}
           {props.isRecommended && <div style={{ height: 5 }} />}
         </CardContent>
