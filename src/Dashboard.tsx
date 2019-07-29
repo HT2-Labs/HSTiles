@@ -117,13 +117,18 @@ export const Dashboard = ({ direction }) => {
           <Slider>
             <SliderInner>
               {myPlanItems.map((itemProps, index) => {
-                const { onClickInfo, ...props } = itemProps;
+                const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
                   <Item key={index}>
                     <Tile
-                      onClickInfo={() => {
+                      onClickInfo={event => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
+                      }}
+                      onClickTile={event => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                        window.open("https://www.curatr3.com");
                       }}
                       layout={LAYOUT_REGULAR}
                       {...props}
@@ -143,13 +148,18 @@ export const Dashboard = ({ direction }) => {
           <Slider>
             <SliderInner>
               {items.map((itemProps, index) => {
-                const { onClickInfo, ...props } = itemProps;
+                const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
                   <Item key={index}>
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
+                      }}
+                      onClickTile={event => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                        window.open("https://www.curatr3.com");
                       }}
                       layout={LAYOUT_SLIM}
                       {...props}
@@ -169,6 +179,7 @@ export const Dashboard = ({ direction }) => {
           <Slider>
             <SliderInner>
               {moreItems.map((itemProps, index) => {
+                const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
                   <Item key={index}>
                     <Tile
@@ -176,8 +187,13 @@ export const Dashboard = ({ direction }) => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                       }}
+                      onClickTile={event => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                        window.open("https://www.curatr3.com");
+                      }}
                       layout={LAYOUT_SLIM}
-                      {...itemProps}
+                      {...props}
                     />
                   </Item>
                 );
@@ -194,9 +210,22 @@ export const Dashboard = ({ direction }) => {
           <Slider>
             <SliderInner>
               {recommendations.map((itemProps, index) => {
+                const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
                   <Item key={index}>
-                    <Tile layout={LAYOUT_SLIM} {...itemProps} />
+                    <Tile
+                      onClickInfo={() => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                      }}
+                      onClickTile={event => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                        window.open("https://www.curatr3.com");
+                      }}
+                      layout={LAYOUT_SLIM}
+                      {...props}
+                    />
                   </Item>
                 );
               })}
