@@ -1,7 +1,13 @@
 import * as React from "react";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "./Tile";
 import { myPlanItems, items, moreItems, recommendations } from "./items";
-import { Link, Drawer, CardMedia, CardContent } from "@material-ui/core";
+import {
+  Link,
+  Drawer,
+  CardMedia,
+  CardContent,
+  Container
+} from "@material-ui/core";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
@@ -11,7 +17,7 @@ const Item = styled.div`
 `;
 
 const MyPlan = styled.div`
-  padding: 20px 20px;
+  padding: 20px 0px;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0e0e0e+0,7d7e7d+99,7d7e7d+100 */
   background: rgb(14, 14, 14); /* Old browsers */
@@ -34,14 +40,12 @@ const MyPlan = styled.div`
     rgba(125, 126, 125, 1) 100%
   ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e0e0e', endColorstr='#7d7e7d',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-  margin-bottom: 14px;
   color: white;
 `;
 
 const FocusAreaStream = styled.div`
-  padding: 10px 20px;
-  margin: 10px 0;
+  padding: 20px 0px;
+  border-bottom: 1px solid #cccccc;
 `;
 
 const Slider = styled.div`
@@ -73,7 +77,7 @@ export const Dashboard = ({ direction }) => {
   const [selectedItem, setSelectedItem] = React.useState(null);
 
   return (
-    <div dir={direction} style={{ background: "#efefef", padding: "10px 0" }}>
+    <div dir={direction} style={{ background: "#efefef" }}>
       {selectedItem && (
         <InfoDrawer
           anchor="right"
@@ -90,91 +94,99 @@ export const Dashboard = ({ direction }) => {
         </InfoDrawer>
       )}
       <MyPlan>
-        <Typography variant="h2" component="h1" gutterBottom>
-          My Plan <Link style={{ color: "white" }}>> View All</Link>
-        </Typography>
-        <Slider>
-          <SliderInner>
-            {myPlanItems.map((itemProps, index) => {
-              const { onClickInfo, ...props } = itemProps;
-              return (
-                <Item key={index}>
-                  <Tile
-                    onClickInfo={() => {
-                      setSelectedItem(props);
-                      setIsDrawerOpen(true);
-                    }}
-                    layout={LAYOUT_REGULAR}
-                    {...props}
-                  />
-                </Item>
-              );
-            })}
-          </SliderInner>
-        </Slider>
+        <Container>
+          <Typography variant="h2" component="h1" gutterBottom>
+            My Plan <Link style={{ color: "white" }}>> View All</Link>
+          </Typography>
+          <Slider>
+            <SliderInner>
+              {myPlanItems.map((itemProps, index) => {
+                const { onClickInfo, ...props } = itemProps;
+                return (
+                  <Item key={index}>
+                    <Tile
+                      onClickInfo={() => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                      }}
+                      layout={LAYOUT_REGULAR}
+                      {...props}
+                    />
+                  </Item>
+                );
+              })}
+            </SliderInner>
+          </Slider>
+        </Container>
       </MyPlan>
       <FocusAreaStream>
-        <Typography variant="h2" gutterBottom>
-          Change Management <Link>> View All</Link>
-        </Typography>
-        <Slider>
-          <SliderInner>
-            {items.map((itemProps, index) => {
-              const { onClickInfo, ...props } = itemProps;
-              return (
-                <Item key={index}>
-                  <Tile
-                    onClickInfo={() => {
-                      setSelectedItem(props);
-                      setIsDrawerOpen(true);
-                    }}
-                    layout={LAYOUT_SLIM}
-                    {...props}
-                  />
-                </Item>
-              );
-            })}
-          </SliderInner>
-        </Slider>
+        <Container>
+          <Typography variant="h2" gutterBottom>
+            Change Management <Link>> View All</Link>
+          </Typography>
+          <Slider>
+            <SliderInner>
+              {items.map((itemProps, index) => {
+                const { onClickInfo, ...props } = itemProps;
+                return (
+                  <Item key={index}>
+                    <Tile
+                      onClickInfo={() => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                      }}
+                      layout={LAYOUT_SLIM}
+                      {...props}
+                    />
+                  </Item>
+                );
+              })}
+            </SliderInner>
+          </Slider>
+        </Container>
       </FocusAreaStream>
       <FocusAreaStream>
-        <Typography variant="h2" gutterBottom>
-          Leadership Skills <Link>> View All</Link>
-        </Typography>
-        <Slider>
-          <SliderInner>
-            {moreItems.map((itemProps, index) => {
-              return (
-                <Item key={index}>
-                  <Tile
-                    onClickInfo={() => {
-                      setSelectedItem(props);
-                      setIsDrawerOpen(true);
-                    }}
-                    layout={LAYOUT_SLIM}
-                    {...itemProps}
-                  />
-                </Item>
-              );
-            })}
-          </SliderInner>
-        </Slider>
+        <Container>
+          <Typography variant="h2" gutterBottom>
+            Leadership Skills <Link>> View All</Link>
+          </Typography>
+          <Slider>
+            <SliderInner>
+              {moreItems.map((itemProps, index) => {
+                return (
+                  <Item key={index}>
+                    <Tile
+                      onClickInfo={() => {
+                        setSelectedItem(props);
+                        setIsDrawerOpen(true);
+                      }}
+                      layout={LAYOUT_SLIM}
+                      {...itemProps}
+                    />
+                  </Item>
+                );
+              })}
+            </SliderInner>
+          </Slider>
+        </Container>
       </FocusAreaStream>
       <FocusAreaStream>
-        <Typography variant="h2" gutterBottom>
-          Recommended <Link>> View All</Link>
-        </Typography>
-        <Slider>
-          <SliderInner>
-            {recommendations.map((itemProps, index) => {
-              return (
-                <Item key={index}>
-                  <Tile layout={LAYOUT_SLIM} {...itemProps} />
-                </Item>
-              );
-            })}
-          </SliderInner>
-        </Slider>
+        <Container>
+          <Typography variant="h2" gutterBottom>
+            Recommended <Link>> View All</Link>
+          </Typography>
+          <Slider>
+            <SliderInner>
+              {recommendations.map((itemProps, index) => {
+                return (
+                  <Item key={index}>
+                    <Tile layout={LAYOUT_SLIM} {...itemProps} />
+                  </Item>
+                );
+              })}
+            </SliderInner>
+          </Slider>
+        </Container>
       </FocusAreaStream>
     </div>
   );

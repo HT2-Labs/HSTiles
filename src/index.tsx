@@ -1,12 +1,17 @@
 import * as React from "react";
 import { render } from "react-dom";
 
-import { createMuiTheme, FormControlLabel, Container } from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
+import {
+  createMuiTheme,
+  FormControlLabel,
+  Switch,
+  CssBaseline
+} from "@material-ui/core";
 import { ThemeProvider, StylesProvider } from "@material-ui/styles";
 import curatrTheme from "./curatrTheme";
 import { lighten } from "@material-ui/core/styles";
 import Dashboard from "./Dashboard";
+import styled from "styled-components";
 
 const makeTheme = (params: any) =>
   createMuiTheme({
@@ -69,36 +74,50 @@ const makeTheme = (params: any) =>
 const LEFT_TO_RIGHT = "ltr";
 const RIGHT_TO_LEFT = "rtl";
 
+const Controls = styled.div`
+  background-color: grey;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 1000;
+  padding: 4px 10px;
+`;
+
 function App() {
   const [direction, setDirection] = React.useState(LEFT_TO_RIGHT);
   const [radius, setRadius] = React.useState(0);
   const primary = curatrTheme.primary;
   const theme = makeTheme({ direction, radius, primary });
   return (
-    <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <FormControlLabel
-          value={RIGHT_TO_LEFT}
-          control={<Checkbox color="primary" />}
-          label="Right to Left"
-          checked={direction === RIGHT_TO_LEFT}
-          onClick={() =>
-            setDirection(
-              direction === RIGHT_TO_LEFT ? LEFT_TO_RIGHT : RIGHT_TO_LEFT
-            )
-          }
-        />
-        <FormControlLabel
-          checked={radius !== 0}
-          control={<Checkbox color="primary" />}
-          label="Round edges"
-          onClick={() => setRadius(radius === 0 ? 12 : 0)}
-        />
-        <Container>
+    <>
+      <CssBaseline />
+      <StylesProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Controls>
+            <FormControlLabel
+              value={RIGHT_TO_LEFT}
+              control={<Switch color="primary" />}
+              label="Right to Left"
+              checked={direction === RIGHT_TO_LEFT}
+              onClick={() =>
+                setDirection(
+                  direction === RIGHT_TO_LEFT ? LEFT_TO_RIGHT : RIGHT_TO_LEFT
+                )
+              }
+            />
+            <FormControlLabel
+              checked={radius !== 0}
+              control={<Switch color="primary" />}
+              label="Round edges"
+              onClick={() => setRadius(radius === 0 ? 12 : 0)}
+            />
+          </Controls>
           <Dashboard direction={direction} />
-        </Container>
-      </ThemeProvider>
-    </StylesProvider>
+        </ThemeProvider>
+      </StylesProvider>
+    </>
   );
 }
 
