@@ -90,16 +90,19 @@ const TileCard = styled(({ layout, glow, ...other }) => <Card {...other} />)`
   width: ${(props: { layout: string }) => LAYOUTS[props.layout].width};
   ${(props: { glow?: boolean }) =>
     props.glow && "box-shadow: 0px 0px 8px 0px " + curatrTheme.primary + ";"};
-  &:hover .Tile_Overlay {
+  &:hover .Tile_Overlay,
+  .MuiCardActionArea-root:focus .Tile_Overlay {
     display: flex;
     opacity: 0.9;
     transition: opacity 0.1s;
   }
-  &:hover .MuiCardMedia-root {
+  &:hover .MuiCardMedia-root,
+  .MuiCardActionArea-root:focus .MuiCardMedia-root {
     -webkit-filter: none;
     filter: none;
   }
-  &:hover {
+  &:hover,
+  .MuiCardActionArea-root:focus {
     transform: scale(1.05);
     transition: transform 0.5s;
 
@@ -143,7 +146,9 @@ const ProgressBar = styled(({ completed, ...other }) => (
       "};"}
 `;
 
-const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
+const TileInfoButton = styled(({ color, layout, ...other }) => (
+  <div {...other} />
+))`
   position: absolute;
   left: 0;
   right: 0;
@@ -156,10 +161,12 @@ const TileInfoButton = styled(({ layout, ...other }) => <div {...other} />)`
   }
   & .MuiSvgIcon-root {
     background: white;
-    & :hover {
-      background: rgb(240, 240, 240);
-    }
     border-radius: 50%;
+  }
+  &:hover .MuiButtonBase-root {
+      background: ${props => props.color};
+      opacity: 0.9;
+    }
   }
 `;
 
@@ -280,7 +287,14 @@ export const Tile = (props: ITileProps) => {
         </CardContent>
       </CardActionArea>
       {props.onClickInfo && (
-        <TileInfoButton layout={layout}>
+        <TileInfoButton
+          layout={layout}
+          color={
+            props.progress === 100
+              ? curatrTheme.complete
+              : theme.palette.primary.main
+          }
+        >
           <IconButton onClick={props.onClickInfo} aria-label="Info">
             <Info />
           </IconButton>
