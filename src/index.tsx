@@ -15,7 +15,7 @@ const makeTheme = (params: any) =>
       borderRadius: 3
     },
     palette: {
-      primary: { main: curatrTheme.primary },
+      primary: { main: params.primary },
       secondary: { main: curatrTheme.danger }
     },
     typography: {
@@ -49,7 +49,7 @@ const makeTheme = (params: any) =>
     overrides: {
       MuiCard: {
         root: {
-          borderRadius: 0
+          borderRadius: params.radius
         }
       },
       MuiLinearProgress: {
@@ -71,7 +71,9 @@ const RIGHT_TO_LEFT = "rtl";
 
 function App() {
   const [direction, setDirection] = React.useState(LEFT_TO_RIGHT);
-  const theme = makeTheme({ direction });
+  const [radius, setRadius] = React.useState(0);
+  const primary = curatrTheme.primary;
+  const theme = makeTheme({ direction, radius, primary });
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -79,11 +81,18 @@ function App() {
           value={RIGHT_TO_LEFT}
           control={<Checkbox color="primary" />}
           label="Right to Left"
+          checked={direction === RIGHT_TO_LEFT}
           onClick={() =>
             setDirection(
               direction === RIGHT_TO_LEFT ? LEFT_TO_RIGHT : RIGHT_TO_LEFT
             )
           }
+        />
+        <FormControlLabel
+          checked={radius !== 0}
+          control={<Checkbox color="primary" />}
+          label="Round edges"
+          onClick={() => setRadius(radius === 0 ? 12 : 0)}
         />
         <Container>
           <Dashboard direction={direction} />
