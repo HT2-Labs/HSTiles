@@ -163,7 +163,7 @@ const TileInfoButton = styled(({ color, layout, ...other }) => (
     background: white;
     border-radius: 50%;
   }
-  &:hover .MuiButtonBase-root {
+  .MuiButtonBase-root:hover {
       background: ${props => props.color};
       opacity: 0.9;
     }
