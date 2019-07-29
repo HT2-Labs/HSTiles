@@ -11,7 +11,7 @@ const Item = styled.div`
 `;
 
 const MyPlan = styled.div`
-  padding: 10px;
+  padding: 20px 20px;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0e0e0e+0,7d7e7d+99,7d7e7d+100 */
   background: rgb(14, 14, 14); /* Old browsers */
@@ -40,15 +40,17 @@ const MyPlan = styled.div`
 `;
 
 const FocusAreaStream = styled.div`
-  padding: 10px;
+  padding: 10px 20px;
   margin: 10px 0;
 `;
 
 const Slider = styled.div`
   width: 100%;
+  padding: 10px;
+  position: relative;
+  left: -10px;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 10px 0px 10px 10px;
   ::-webkit-scrollbar {
     width: 0 !important;
   }
@@ -88,7 +90,7 @@ export const Dashboard = ({ direction }) => {
         </InfoDrawer>
       )}
       <MyPlan>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" component="h1" gutterBottom>
           My Plan <Link style={{ color: "white" }}>> View All</Link>
         </Typography>
         <Slider>
