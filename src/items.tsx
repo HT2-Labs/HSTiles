@@ -19,6 +19,7 @@ const lorem = new LoremIpsum({
 const makeProps = (props?: any) => {
   return {
     type: props && props.type ? props.type : lorem.generateWords(2),
+    date: "12/03/19",
     title: props && props.title ? props.title : lorem.generateSentences(1),
     isAssigned: props && props.isAssigned ? props.isAssigned : false,
     isRecommended: props && props.isRecommended ? props.isRecommended : false,
@@ -64,7 +65,7 @@ const makeProps = (props?: any) => {
 export const myPlanItems = [
   makeProps({
     isAssigned: true,
-    type: "Adapt Course",
+    type: "PDF",
     progress: 20
   }),
   makeProps({

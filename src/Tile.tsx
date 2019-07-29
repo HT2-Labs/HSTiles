@@ -16,6 +16,7 @@ import { useTheme } from "@material-ui/core/styles";
 import IconStar from "./IconStar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import CheckCircle from "@material-ui/icons/CheckCircle";
+import EventIcon from "@material-ui/icons/Event";
 import curatrTheme from "./curatrTheme";
 
 export const LAYOUT_SLIM = "layout_slim";
@@ -102,7 +103,8 @@ const TileCard = styled(({ layout, glow, ...other }) => <Card {...other} />)`
     filter: none;
   }
   &:hover,
-  .MuiCardActionArea-root:focus {
+  .MuiCardActionArea-root:focus,
+  .MuiCardActionArea-root:focus .MuiCardMedia-root {
     transform: scale(1.05);
     transition: transform 0.5s;
 
@@ -261,12 +263,8 @@ export const Tile = (props: ITileProps) => {
         )}
         <CardContent>
           <TileType variant="subtitle1">
-            <TextTruncate
-              line={1}
-              element="span"
-              truncateText="…"
-              text={props.type}
-            />
+            <EventIcon fontSize="inherit" style={{ marginRight: 4 }} />
+            {props.date}
           </TileType>
           <TileTitle layout={layout}>
             <TextTruncate
