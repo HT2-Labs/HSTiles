@@ -12,7 +12,7 @@ import curatrTheme from "./curatrTheme";
 import { lighten } from "@material-ui/core/styles";
 import Dashboard from "./Dashboard";
 import styled from "styled-components";
-import { learningExperiences } from "./Data";
+import { learningExperiences, focusAreas } from "./Data";
 
 const makeTheme = (params: any) =>
   createMuiTheme({
@@ -118,6 +118,7 @@ function App() {
           <Dashboard
             direction={direction}
             myPlanItems={learningExperiences.myPlanItems}
+            focusAreas={focusAreas.items}
           />
         </ThemeProvider>
       </StylesProvider>

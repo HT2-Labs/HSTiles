@@ -1,5 +1,6 @@
 import * as learningExperiences from "./learningExperiences";
+import * as focusAreas from "./focusAreas";
 
-export { learningExperiences };
+export { learningExperiences, focusAreas };
 
-export default { learningExperiences };
+export default { learningExperiences, focusAreas };

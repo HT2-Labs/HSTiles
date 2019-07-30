@@ -39,12 +39,16 @@ interface LearningExperienceItem {
 interface IDashboardProps {
   direction: string;
   myPlanItems: LearningExperienceItem[];
+  focusAreas: any;
 }
 
-export const Dashboard = ({ direction, myPlanItems }: IDashboardProps) => {
+export const Dashboard = ({
+  direction,
+  myPlanItems,
+  focusAreas
+}: IDashboardProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
-  const { items, moreItems, recommendations } = learningExperiences;
 
   return (
     <div dir={direction} style={{ background: "#efefef" }}>
@@ -95,99 +99,41 @@ export const Dashboard = ({ direction, myPlanItems }: IDashboardProps) => {
           </Slider>
         </Container>
       </MyPlan>
-      <FocusAreaStream>
-        <Container>
-          <Typography variant="h2" gutterBottom>
-            Change Management <Link>> View All</Link>
-          </Typography>
-          <Slider>
-            <SliderInner>
-              {items.map((itemProps, index) => {
-                const { onClickInfo, onClickTile, ...props } = itemProps;
-                return (
-                  <SliderItem key={index}>
-                    <Tile
-                      onClickInfo={() => {
-                        setSelectedItem(props);
-                        setIsDrawerOpen(true);
-                      }}
-                      onClickTile={() => {
-                        setSelectedItem(props);
-                        setIsDrawerOpen(true);
-                        window.open("https://www.curatr3.com");
-                      }}
-                      layout={LAYOUT_SLIM}
-                      {...props}
-                    />
-                  </SliderItem>
-                );
-              })}
-            </SliderInner>
-          </Slider>
-        </Container>
-      </FocusAreaStream>
-      <FocusAreaStream>
-        <Container>
-          <Typography variant="h2" gutterBottom>
-            Leadership Skills <Link>> View All</Link>
-          </Typography>
-          <Slider>
-            <SliderInner>
-              {moreItems.map((itemProps, index) => {
-                const { onClickInfo, onClickTile, ...props } = itemProps;
-                return (
-                  <SliderItem key={index}>
-                    <Tile
-                      onClickInfo={() => {
-                        setSelectedItem(props);
-                        setIsDrawerOpen(true);
-                      }}
-                      onClickTile={() => {
-                        setSelectedItem(props);
-                        setIsDrawerOpen(true);
-                        window.open("https://www.curatr3.com");
-                      }}
-                      layout={LAYOUT_SLIM}
-                      {...props}
-                    />
-                  </SliderItem>
-                );
-              })}
-            </SliderInner>
-          </Slider>
-        </Container>
-      </FocusAreaStream>
-      <FocusAreaStream>
-        <Container>
-          <Typography variant="h2" gutterBottom>
-            Recommended <Link>> View All</Link>
-          </Typography>
-          <Slider>
-            <SliderInner>
-              {recommendations.map((itemProps, index) => {
-                const { onClickInfo, onClickTile, ...props } = itemProps;
-                return (
-                  <SliderItem key={index}>
-                    <Tile
-                      onClickInfo={() => {
-                        setSelectedItem(props);
-                        setIsDrawerOpen(true);
-                      }}
-                      onClickTile={() => {
-                        setSelectedItem(props);
-                        setIsDrawerOpen(true);
-                        window.open("https://www.curatr3.com");
-                      }}
-                      layout={LAYOUT_SLIM}
-                      {...props}
-                    />
-                  </SliderItem>
-                );
-              })}
-            </SliderInner>
-          </Slider>
-        </Container>
-      </FocusAreaStream>
+      {focusAreas.map((focusArea, index) => {
+        return (
+          <FocusAreaStream>
+            <Container>
+              <Typography variant="h2" gutterBottom>
+                {focusArea.name} <Link>> View All</Link>
+              </Typography>
+              <Slider>
+                <SliderInner>
+                  {focusArea.learningExperiences.map((itemProps, index) => {
+                    const { onClickInfo, onClickTile, ...props } = itemProps;
+                    return (
+                      <SliderItem key={index}>
+                        <Tile
+                          onClickInfo={() => {
+                            setSelectedItem(props);
+                            setIsDrawerOpen(true);
+                          }}
+                          onClickTile={() => {
+                            setSelectedItem(props);
+                            setIsDrawerOpen(true);
+                            window.open("https://www.curatr3.com");
+                          }}
+                          layout={LAYOUT_SLIM}
+                          {...props}
+                        />
+                      </SliderItem>
+                    );
+                  })}
+                </SliderInner>
+              </Slider>
+            </Container>
+          </FocusAreaStream>
+        );
+      })}
     </div>
   );
 };

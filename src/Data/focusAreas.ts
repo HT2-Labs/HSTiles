@@ -1,9 +1,4 @@
-import * as React from "react";
 import { LoremIpsum } from "lorem-ipsum";
-
-import Launch from "@material-ui/icons/Launch";
-import IconCourse from "../Icons/IconCourse";
-import SvgIcon from "@material-ui/core/SvgIcon";
 import learningExperiences from "./learningExperiences";
 
 const lorem = new LoremIpsum({
@@ -13,7 +8,7 @@ const lorem = new LoremIpsum({
   },
   wordsPerSentence: {
     max: 16,
-    min: 4
+    min: 2
   }
 });
 
@@ -23,7 +18,11 @@ const makeProps = (props?: any) => {
     description:
       props && props.description
         ? props.description
-        : lorem.generateSentences(4)
+        : lorem.generateSentences(4),
+    learningExperiences:
+      props && props.learningExperiences
+        ? props.learningExperiences
+        : learningExperiences.items
   };
 };
 
@@ -34,7 +33,7 @@ export const items = [
   }),
   makeProps({
     name: "Leadership Skills",
-    learningExperiences: learningExperiences.items
+    learningExperiences: learningExperiences.moreItems
   })
 ];
 
