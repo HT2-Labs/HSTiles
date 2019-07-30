@@ -1,25 +1,13 @@
 import * as React from "react";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
-import {
-  Link,
-  Drawer,
-  CardMedia,
-  CardContent,
-  Container
-} from "@material-ui/core";
-import styled from "styled-components";
+import { Link, CardMedia, CardContent, Container } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
-
-const InfoDrawer = styled(({ ...other }) => <Drawer {...other} />)`
-  & .MuiPaper-root {
-    width: 350px;
-  }
-`;
+import InfoDrawer from "../InfoDrawer/InfoDrawer";
 
 interface LearningExperienceItem {
   isAssigned?: boolean;
