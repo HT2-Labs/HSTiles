@@ -9,7 +9,7 @@ import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
 import InfoDrawer from "../InfoDrawer/InfoDrawer";
 
-interface LearningExperienceItem {
+interface ILearningExperienceItem {
   isAssigned?: boolean;
   isRecommended?: boolean;
   layout?: string;
@@ -23,10 +23,16 @@ interface LearningExperienceItem {
   onClickInfo?: (event: React.MouseEvent) => void;
 }
 
+interface IFocusArea {
+  name: string;
+  description: string;
+  learningExperiences: ILearningExperienceItem[];
+}
+
 interface IDashboardProps {
   direction: string;
-  myPlanItems: LearningExperienceItem[];
-  focusAreas: any;
+  myPlanItems: ILearningExperienceItem[];
+  focusAreas: IFocusArea[];
 }
 
 export const Dashboard = ({
@@ -38,7 +44,7 @@ export const Dashboard = ({
   const [
     selectedItem,
     setSelectedItem
-  ] = React.useState<null | LearningExperienceItem>(null);
+  ] = React.useState<null | ILearningExperienceItem>(null);
 
   return (
     <div dir={direction} style={{ background: "#efefef" }}>

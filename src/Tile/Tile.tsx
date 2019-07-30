@@ -24,7 +24,9 @@ import TileOverlay from "./Components/TileOverlay";
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
 
-const LAYOUTS = {
+const LAYOUTS: {
+  [key: string]: { width: string; imagePadding: string; titleHeight: string };
+} = {
   [LAYOUT_SLIM]: {
     width: "180px",
     imagePadding: "60%",
@@ -51,6 +53,7 @@ interface ITileProps {
   imagePath?: string;
   type: string;
   title: string;
+  date?: string;
   progress?: number;
   overlay?: IOverlay;
   onClickTile?: (event: React.MouseEvent) => void;

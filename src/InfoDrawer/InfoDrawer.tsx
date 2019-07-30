@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Drawer from "@material-ui/core/Drawer";
 
 export const InfoDrawer = styled(({ ...other }) => <Drawer {...other} />)`
   & .MuiPaper-root {
@@ -6,4 +7,4 @@ export const InfoDrawer = styled(({ ...other }) => <Drawer {...other} />)`
   }
 `;
 
-export default InfoDrawer; 
+export default InfoDrawer;
