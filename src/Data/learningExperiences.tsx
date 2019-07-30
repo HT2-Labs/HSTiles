@@ -2,7 +2,7 @@ import * as React from "react";
 import { LoremIpsum } from "lorem-ipsum";
 
 import Launch from "@material-ui/icons/Launch";
-import IconCourse from "./IconCourse";
+import IconCourse from "../Icons/IconCourse";
 import SvgIcon from "@material-ui/core/SvgIcon";
 
 const lorem = new LoremIpsum({
@@ -221,4 +221,4 @@ export const recommendations = [
   })
 ];
 
-export default items;
+export default { items, moreItems, myPlanItems, recommendations };

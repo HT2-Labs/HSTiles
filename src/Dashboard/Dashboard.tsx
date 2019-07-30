@@ -1,73 +1,20 @@
 import * as React from "react";
-import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "./Tile";
-import { myPlanItems, items, moreItems, recommendations } from "./items";
+import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
+import { learningExperiences } from "../Data";
 import {
   Link,
   Drawer,
   CardMedia,
   CardContent,
-  Container,
-  AppBar,
-  Toolbar
+  Container
 } from "@material-ui/core";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
-const Item = styled.div`
-  margin: 10px;
-  display: inline-block;
-`;
-
-const MyPlan = styled.div`
-  padding: 20px 0px;
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#7d7e7d+0,0e0e0e+100;Black+3D */
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0e0e0e+0,7d7e7d+99,7d7e7d+100 */
-  background: rgb(14, 14, 14); /* Old browsers */
-  background: -moz-linear-gradient(
-    -45deg,
-    rgba(40, 40, 40, 1) 0%,
-    rgba(125, 126, 125, 1) 99%,
-    rgba(125, 126, 125, 1) 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    -45deg,
-    rgba(40, 40, 40, 1) 0%,
-    rgba(125, 126, 125, 1) 99%,
-    rgba(125, 126, 125, 1) 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    135deg,
-    rgba(40, 40, 40, 1) 0%,
-    rgba(125, 126, 125, 1) 99%,
-    rgba(125, 126, 125, 1) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e0e0e', endColorstr='#7d7e7d',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-  color: white;
-`;
-
-const FocusAreaStream = styled.div`
-  padding: 20px 0 0px 0px;
-  border-bottom: 1px solid #dddddd;
-`;
-
-const Slider = styled.div`
-  width: 100%;
-  padding: 10px;
-  position: relative;
-  left: -20px;
-  right: -20px;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  ::-webkit-scrollbar {
-    width: 0 !important;
-  }
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-`;
-
-const SliderInner = styled.div`
-  min-width: 4000px;
-`;
+import MyPlan from "./Components/MyPlan";
+import FocusAreaStream from "./Components/FocusAreaStream";
+import Header from "../Header";
+import Slider, { SliderInner, SliderItem } from "../Slider";
 
 const InfoDrawer = styled(({ ...other }) => <Drawer {...other} />)`
   & .MuiPaper-root {
@@ -75,13 +22,29 @@ const InfoDrawer = styled(({ ...other }) => <Drawer {...other} />)`
   }
 `;
 
-const Header = styled(({ ...other }) => <AppBar {...other} />)`
-  background-color: #ffffff;
-`;
+interface LearningExperienceItem {
+  isAssigned?: boolean;
+  isRecommended?: boolean;
+  layout?: string;
+  glow?: boolean;
+  imagePath?: string;
+  type: string;
+  title: string;
+  progress?: number;
+  overlay?: any;
+  onClickTile?: (event: React.MouseEvent) => void;
+  onClickInfo?: (event: React.MouseEvent) => void;
+}
 
-export const Dashboard = ({ direction }) => {
+interface IDashboardProps {
+  direction: string;
+  myPlanItems: LearningExperienceItem[];
+}
+
+export const Dashboard = ({ direction, myPlanItems }: IDashboardProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
+  const { items, moreItems, recommendations } = learningExperiences;
 
   return (
     <div dir={direction} style={{ background: "#efefef" }}>
@@ -100,15 +63,7 @@ export const Dashboard = ({ direction }) => {
           </CardContent>
         </InfoDrawer>
       )}
-      <Header position="static" color="default">
-        <Toolbar>
-          <Container>
-            <Typography variant="h6" color="inherit">
-              Search goes here
-            </Typography>
-          </Container>
-        </Toolbar>
-      </Header>
+      <Header />
       <MyPlan>
         <Container>
           <Typography variant="h2" component="h1" gutterBottom>
@@ -119,13 +74,13 @@ export const Dashboard = ({ direction }) => {
               {myPlanItems.map((itemProps, index) => {
                 const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
-                  <Item key={index}>
+                  <SliderItem key={index}>
                     <Tile
-                      onClickInfo={event => {
+                      onClickInfo={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                       }}
-                      onClickTile={event => {
+                      onClickTile={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                         window.open("https://www.curatr3.com");
@@ -133,7 +88,7 @@ export const Dashboard = ({ direction }) => {
                       layout={LAYOUT_REGULAR}
                       {...props}
                     />
-                  </Item>
+                  </SliderItem>
                 );
               })}
             </SliderInner>
@@ -150,13 +105,13 @@ export const Dashboard = ({ direction }) => {
               {items.map((itemProps, index) => {
                 const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
-                  <Item key={index}>
+                  <SliderItem key={index}>
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                       }}
-                      onClickTile={event => {
+                      onClickTile={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                         window.open("https://www.curatr3.com");
@@ -164,7 +119,7 @@ export const Dashboard = ({ direction }) => {
                       layout={LAYOUT_SLIM}
                       {...props}
                     />
-                  </Item>
+                  </SliderItem>
                 );
               })}
             </SliderInner>
@@ -181,13 +136,13 @@ export const Dashboard = ({ direction }) => {
               {moreItems.map((itemProps, index) => {
                 const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
-                  <Item key={index}>
+                  <SliderItem key={index}>
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                       }}
-                      onClickTile={event => {
+                      onClickTile={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                         window.open("https://www.curatr3.com");
@@ -195,7 +150,7 @@ export const Dashboard = ({ direction }) => {
                       layout={LAYOUT_SLIM}
                       {...props}
                     />
-                  </Item>
+                  </SliderItem>
                 );
               })}
             </SliderInner>
@@ -212,13 +167,13 @@ export const Dashboard = ({ direction }) => {
               {recommendations.map((itemProps, index) => {
                 const { onClickInfo, onClickTile, ...props } = itemProps;
                 return (
-                  <Item key={index}>
+                  <SliderItem key={index}>
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                       }}
-                      onClickTile={event => {
+                      onClickTile={() => {
                         setSelectedItem(props);
                         setIsDrawerOpen(true);
                         window.open("https://www.curatr3.com");
@@ -226,7 +181,7 @@ export const Dashboard = ({ direction }) => {
                       layout={LAYOUT_SLIM}
                       {...props}
                     />
-                  </Item>
+                  </SliderItem>
                 );
               })}
             </SliderInner>

@@ -12,6 +12,7 @@ import curatrTheme from "./curatrTheme";
 import { lighten } from "@material-ui/core/styles";
 import Dashboard from "./Dashboard";
 import styled from "styled-components";
+import { learningExperiences } from "./Data";
 
 const makeTheme = (params: any) =>
   createMuiTheme({
@@ -114,7 +115,10 @@ function App() {
               onClick={() => setRadius(radius === 0 ? 12 : 0)}
             />
           </Controls>
-          <Dashboard direction={direction} />
+          <Dashboard
+            direction={direction}
+            myPlanItems={learningExperiences.myPlanItems}
+          />
         </ThemeProvider>
       </StylesProvider>
     </>

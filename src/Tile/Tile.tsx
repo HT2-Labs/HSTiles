@@ -13,11 +13,11 @@ import Label from "@material-ui/icons/Label";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { useTheme } from "@material-ui/core/styles";
-import IconStar from "./IconStar";
+import IconStar from "../Icons/IconStar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import EventIcon from "@material-ui/icons/Event";
-import curatrTheme from "./curatrTheme";
+import curatrTheme from "../curatrTheme";
 
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
