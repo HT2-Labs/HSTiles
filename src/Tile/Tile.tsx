@@ -19,6 +19,8 @@ import CheckCircle from "@material-ui/icons/CheckCircle";
 import EventIcon from "@material-ui/icons/Event";
 import curatrTheme from "../curatrTheme";
 
+import TileOverlay from "./Components/TileOverlay";
+
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
 
@@ -54,23 +56,6 @@ interface ITileProps {
   onClickTile?: (event: React.MouseEvent) => void;
   onClickInfo?: (event: React.MouseEvent) => void;
 }
-
-const TileOverlay = styled.div`
-  position: absolute;
-  display: flex;
-  opacity: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  transition: opacity 1s;
-  background-color: ${(props: { background: string }) => props.background};
-`;
 
 const TileStatus = styled.div`
   position: absolute;
