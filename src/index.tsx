@@ -1,6 +1,5 @@
 import * as React from "react";
 import { render } from "react-dom";
-
 import {
   createMuiTheme,
   FormControlLabel,
@@ -10,9 +9,8 @@ import {
 import { ThemeProvider, StylesProvider } from "@material-ui/styles";
 import curatrTheme from "./curatrTheme";
 import { lighten } from "@material-ui/core/styles";
-import Dashboard from "./Dashboard";
+import DashboardContainer from "./Dashboard";
 import styled from "styled-components";
-import { learningExperiences, focusAreas } from "./Data";
 
 const makeTheme = (params: any) =>
   createMuiTheme({
@@ -115,11 +113,7 @@ function App() {
               onClick={() => setRadius(radius === 0 ? 12 : 0)}
             />
           </Controls>
-          <Dashboard
-            direction={direction}
-            myPlanItems={learningExperiences.myPlanItems}
-            focusAreas={focusAreas.items}
-          />
+          <DashboardContainer direction={direction} />
         </ThemeProvider>
       </StylesProvider>
     </>

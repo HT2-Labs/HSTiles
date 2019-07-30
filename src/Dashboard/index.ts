@@ -1,5 +1,6 @@
 import Dashboard from "./Dashboard";
+import DashboardContainer from "./DashboardContainer";
 
-export { Dashboard };
+export { Dashboard, DashboardContainer };
 
-export default Dashboard;
+export default DashboardContainer;

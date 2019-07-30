@@ -1,6 +1,5 @@
 import * as React from "react";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
-import { learningExperiences } from "../Data";
 import {
   Link,
   Drawer,
