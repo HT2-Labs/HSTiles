@@ -35,7 +35,10 @@ export const Dashboard = ({
   focusAreas
 }: IDashboardProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [selectedItem, setSelectedItem] = React.useState(null);
+  const [
+    selectedItem,
+    setSelectedItem
+  ] = React.useState<null | LearningExperienceItem>(null);
 
   return (
     <div dir={direction} style={{ background: "#efefef" }}>
