@@ -1,17 +1,11 @@
 import * as React from "react";
-
-import styled from "styled-components";
 import TextTruncate from "react-text-truncate";
-
-import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Info from "@material-ui/icons/Info";
 import Label from "@material-ui/icons/Label";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import { useTheme } from "@material-ui/core/styles";
 import IconStar from "../Icons/IconStar";
 import SvgIcon from "@material-ui/core/SvgIcon";
@@ -20,6 +14,14 @@ import EventIcon from "@material-ui/icons/Event";
 import curatrTheme from "../curatrTheme";
 
 import TileOverlay from "./Components/TileOverlay";
+import TileStatus from "./Components/TileStatus";
+import TileCard from "./Components/TileCard";
+import TileImage from "./Components/TileImage";
+import TileTitle from "./Components/TileTitle";
+import TileType from "./Components/TileType";
+import ProgressBar from "./Components/ProgressBar";
+import TileInfoButton from "./Components/TileInfoButton";
+import TileLabel from "./Components/TileLabel";
 
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
@@ -59,133 +61,6 @@ interface ITileProps {
   onClickTile?: (event: React.MouseEvent) => void;
   onClickInfo?: (event: React.MouseEvent) => void;
 }
-
-const TileStatus = styled.div`
-  position: absolute;
-  display: flex;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  background: rgba(0, 0, 0, 0.4);
-`;
-
-const TileCard = styled(({ layout, glow, ...other }) => <Card {...other} />)`
-  position: relative;
-  width: ${(props: { layout: string }) => LAYOUTS[props.layout].width};
-  ${(props: { glow?: boolean }) =>
-    props.glow && "box-shadow: 0px 0px 8px 0px " + curatrTheme.primary + ";"};
-  &:hover .Tile_Overlay,
-  .MuiCardActionArea-root:focus .Tile_Overlay {
-    display: flex;
-    opacity: 0.9;
-    transition: opacity 0.1s;
-  }
-  &:hover .MuiCardMedia-root,
-  .MuiCardActionArea-root:focus .MuiCardMedia-root {
-    -webkit-filter: none;
-    filter: none;
-  }
-  &:hover,
-  .MuiCardActionArea-root:focus,
-  .MuiCardActionArea-root:focus .MuiCardMedia-root {
-    transform: scale(1.05);
-    transition: transform 0.5s;
-
-    // Remove animations for improved accessibility
-    @media (prefers-reduced-motion: reduce) {
-      transform: scale(1);
-    }
-  }
-`;
-
-const TileImage = styled(({ greyscale, layout, ...other }) => (
-  <CardMedia {...other} />
-))`
-  height: 0;
-  padding-top: ${props => LAYOUTS[props.layout].imagePadding};
-  position: relative;
-  // Known issue: This greyscale filter will not work in IE
-  ${props =>
-    props.greyscale &&
-    "-webkit-filter: grayscale(100%); filter: grayscale(100%);"}
-`;
-
-const TileTitle = styled(({ layout, ...other }) => <Typography {...other} />)`
-  height: ${props => LAYOUTS[props.layout].titleHeight};
-  font-size: 1.4em;
-  font-weight: 600;
-  margin: 0px 0 16px 0;
-`;
-
-const TileType = styled(({ ...other }) => <Typography {...other} />)`
-  color: #6a6a6a;
-`;
-
-const ProgressBar = styled(({ completed, ...other }) => (
-  <LinearProgress {...other} />
-))`
-  ${props =>
-    props.completed &&
-    "& .MuiLinearProgress-barColorPrimary {background-color: " +
-      curatrTheme.complete +
-      "};"}
-`;
-
-const TileInfoButton = styled(({ color, layout, ...other }) => (
-  <div {...other} />
-))`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: ${props => (props.layout === LAYOUT_SLIM ? "85px" : "102px")};
-  // bottom: 17px;
-  & .MuiIconButton-root {
-    position: relative;
-    left: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
-    right: ${props => (props.layout === LAYOUT_SLIM ? "130px" : "300px")};
-  }
-  & .MuiSvgIcon-root {
-    background: white;
-    border-radius: 50%;
-  }
-  .MuiButtonBase-root:hover {
-      background: ${props => props.color};
-      opacity: 0.9;
-    }
-  }
-`;
-
-const TileLabel = styled(({ color, ...other }) => <div {...other} />)`
-  position: absolute;
-  bottom: 0px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 4px 0 0 8px;
-  // border-radius: 50px;
-  color: ${props => props.color};
-  // margin: 0 10px;
-  box-shadow: 0px 1px -3px 0px rgba(0, 0, 0, 0.2);
-  & .MuiSvgIcon-root {
-    width: 14px;
-    height: 14px;
-    position: relative;
-    top: 0px;
-    display: inline-block;
-    margin-right: 8px;
-  }
-  & .MuiTypography-root {
-    position: relative;
-    top: -3px;
-    font-size: 1em;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-right: 8px;
-  }
-`;
 
 export const Tile = (props: ITileProps) => {
   const { layout, glow } = props;
