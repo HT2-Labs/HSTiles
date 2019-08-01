@@ -33,10 +33,10 @@ const makeProps = (props?: any) => {
       props && props.progress !== undefined
         ? props.progress
         : Math.random() * 100,
-    onClickTile: event => {
+    onClickTile: (event: React.MouseEvent) => {
       alert("Clicked Tile");
     },
-    onClickInfo: event => {
+    onClickInfo: (event: React.MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
       alert("Clicked info");
