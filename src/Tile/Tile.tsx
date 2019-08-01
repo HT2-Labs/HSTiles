@@ -26,7 +26,7 @@ import TileLabel from "./Components/TileLabel";
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
 
-const LAYOUTS: {
+export const LAYOUTS: {
   [key: string]: { width: string; imagePadding: string; titleHeight: string };
 } = {
   [LAYOUT_SLIM]: {
