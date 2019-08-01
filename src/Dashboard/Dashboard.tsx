@@ -1,6 +1,14 @@
 import * as React from "react";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
-import { Link, CardMedia, CardContent, Container } from "@material-ui/core";
+import {
+  Link,
+  CardMedia,
+  CardContent,
+  Container,
+  LinearProgress,
+  Badge,
+  Button
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
 import MyPlan from "./Components/MyPlan";
@@ -59,7 +67,23 @@ export const Dashboard = ({
             style={{ paddingTop: "33%" }}
           />
           <CardContent>
+            <LinearProgress
+              value={selectedItem.progress}
+              variant="determinate"
+            />
             <Typography variant="h1">{selectedItem.title}</Typography>
+            <Typography variant="h2">{"abcdefg"}</Typography>
+            <Badge badgeContent="1hr" />
+            <Badge badgeContent="" />
+            <Badge badgeContent="" />
+            <br />
+            <Button variant="contained" color="primary" fullWidth="True">
+              continue course
+            </Button>
+            <br />
+            <Button variant="contained" color="secondary" fullWidth="True">
+              add to
+            </Button>
           </CardContent>
         </InfoDrawer>
       )}
