@@ -1,6 +1,14 @@
 import * as React from "react";
+import styled from "styled-components";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
-import { Link, CardMedia, CardContent, Container, Button } from "@material-ui/core";
+import {
+  Link,
+  CardMedia,
+  CardContent,
+  Container,
+  LinearProgress,
+  Button
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import MyPlan from "./Components/MyPlan";
@@ -37,6 +45,14 @@ interface IDashboardProps {
   myPlanItems: ILearningExperienceItem[];
   focusAreas: IFocusArea[];
 }
+
+const Banner = styled.div`
+  height: 300px;
+  width: 100%;
+  background: url(${(props: { url: string }) => props.url});
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
 
 export const Dashboard = ({
   direction,
@@ -145,9 +161,9 @@ export const Dashboard = ({
           <Slider>
             <SliderInner>
               {myPlanItems.map((itemProps, index) => {
-                const { onClickInfo, onClickTile, ...props } = itemProps;
+                const { onClickInfo, onClickTile, glow, ...props } = itemProps;
                 return (
-                  <SliderItem key={index}>
+                  <SliderItem key={index} margin="0 20px">
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
@@ -159,6 +175,7 @@ export const Dashboard = ({
                         window.open("https://www.curatr3.com");
                       }}
                       layout={LAYOUT_REGULAR}
+                      glow={true}
                       {...props}
                     />
                   </SliderItem>

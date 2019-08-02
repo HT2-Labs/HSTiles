@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const SliderItem = styled.div`
-  margin: 10px;
+  margin: ${(props: { margin?: string }) =>
+    props.margin ? props.margin : "0 14px"};
   display: inline-block;
 `;
 

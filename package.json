@@ -12,6 +12,7 @@
     "@types/reveal": "^3.3.33",
     "@types/styled-components": "4.1.18",
     "lorem-ipsum": "2.0.3",
+    "moment": "2.24.0",
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-reveal": "^1.2.2",
