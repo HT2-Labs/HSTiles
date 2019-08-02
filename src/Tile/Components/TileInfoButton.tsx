@@ -15,9 +15,9 @@ export const TileInfoButton = styled(({ layout, ...other }) => (
     position: relative;
     font-size: 1.9rem;
     left: ${(props: { layout: string }) =>
-      props.layout === LAYOUT_SLIM ? "126px" : "323px"};
+      props.layout === LAYOUT_SLIM ? "126px" : "325px"};
     right: ${(props: { layout: string }) =>
-      props.layout === LAYOUT_SLIM ? "126px" : "323px"};
+      props.layout === LAYOUT_SLIM ? "126px" : "325px"};
   }
   & .MuiSvgIcon-root {
     background: white;
