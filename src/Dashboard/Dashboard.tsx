@@ -7,7 +7,6 @@ import {
   CardContent,
   Container,
   LinearProgress,
-  Badge,
   Button
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -82,17 +81,6 @@ export const Dashboard = ({
             />
             <Typography variant="h1">{selectedItem.title}</Typography>
             <Typography variant="h2">{"abcdefg"}</Typography>
-            <Badge badgeContent="1hr" />
-            <Badge badgeContent="" />
-            <Badge badgeContent="" />
-            <br />
-            <Button variant="contained" color="primary" fullWidth="True">
-              continue course
-            </Button>
-            <br />
-            <Button variant="contained" color="secondary" fullWidth="True">
-              add to
-            </Button>
           </CardContent>
         </InfoDrawer>
       )}
