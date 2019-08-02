@@ -9,15 +9,15 @@ export const TileInfoButton = styled(({ layout, ...other }) => (
   left: 0;
   right: 0;
   top: ${(props: { layout: string }) =>
-    props.layout === LAYOUT_SLIM ? "82px" : "100px"};
+    props.layout === LAYOUT_SLIM ? "82px" : "110px"};
   // bottom: 17px;
   & .MuiIconButton-root {
     position: relative;
     font-size: 1.9rem;
     left: ${(props: { layout: string }) =>
-      props.layout === LAYOUT_SLIM ? "126px" : "296px"};
+      props.layout === LAYOUT_SLIM ? "126px" : "323px"};
     right: ${(props: { layout: string }) =>
-      props.layout === LAYOUT_SLIM ? "126px" : "296px"};
+      props.layout === LAYOUT_SLIM ? "126px" : "323px"};
   }
   & .MuiSvgIcon-root {
     background: white;

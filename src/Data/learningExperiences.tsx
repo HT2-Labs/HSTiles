@@ -69,6 +69,9 @@ const makeProps = (props?: any) => {
 };
 
 export const myPlanItems = [
+  makeProps({}),
+  makeProps({}),
+  makeProps({}),
   makeProps({
     isAssigned: true,
     type: "PDF",

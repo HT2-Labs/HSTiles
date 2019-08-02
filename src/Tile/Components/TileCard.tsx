@@ -2,7 +2,6 @@ import * as React from "react";
 import styled from "styled-components";
 import { LAYOUTS } from "../Tile";
 import Card from "@material-ui/core/Card";
-import curatrTheme from "../../curatrTheme";
 
 export const TileCard = styled(({ layout, glow, ...other }) => (
   <Card {...other} />
@@ -10,7 +9,7 @@ export const TileCard = styled(({ layout, glow, ...other }) => (
   position: relative;
   width: ${(props: { layout: string }) => LAYOUTS[props.layout].width};
   ${(props: { glow?: boolean }) =>
-    props.glow && "box-shadow: 0px 0px 8px 0px " + curatrTheme.primary + ";"};
+    props.glow && "box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.4);"};
   &:hover .Tile_Overlay,
   .MuiCardActionArea-root:focus .Tile_Overlay {
     display: flex;

@@ -106,9 +106,9 @@ export const Dashboard = ({
           <Slider>
             <SliderInner>
               {myPlanItems.map((itemProps, index) => {
-                const { onClickInfo, onClickTile, ...props } = itemProps;
+                const { onClickInfo, onClickTile, glow, ...props } = itemProps;
                 return (
-                  <SliderItem key={index}>
+                  <SliderItem key={index} margin="0 20px">
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
@@ -120,6 +120,7 @@ export const Dashboard = ({
                         window.open("https://www.curatr3.com");
                       }}
                       layout={LAYOUT_REGULAR}
+                      glow={true}
                       {...props}
                     />
                   </SliderItem>
