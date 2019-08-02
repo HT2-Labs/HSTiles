@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SliderItem = styled.div`
-  margin: 10px;
+  margin: 0 10px;
   display: inline-block;
 `;
 
@@ -11,7 +11,7 @@ export const SliderInner = styled.div`
 
 export const Slider = styled.div`
   width: 100%;
-  padding: 10px;
+  padding: 0px;
   position: relative;
   left: -20px;
   right: -20px;

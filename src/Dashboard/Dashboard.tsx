@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
 import {
   Link,
@@ -42,6 +43,14 @@ interface IDashboardProps {
   myPlanItems: ILearningExperienceItem[];
   focusAreas: IFocusArea[];
 }
+
+const Banner = styled.div`
+  height: 300px;
+  width: 100%;
+  background: url(${(props: { url: string }) => props.url});
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
 
 export const Dashboard = ({
   direction,
@@ -88,6 +97,7 @@ export const Dashboard = ({
         </InfoDrawer>
       )}
       <Header />
+      <Banner url="https://picsum.photos/1200/300" />
       <MyPlan>
         <Container>
           <Typography variant="h2" component="h1" gutterBottom>

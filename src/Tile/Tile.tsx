@@ -157,7 +157,7 @@ export const Tile = (props: ITileProps) => {
           }
         >
           <IconButton onClick={props.onClickInfo} aria-label="Info">
-            <Info />
+            <Info fontSize="inherit" />
           </IconButton>
         </TileInfoButton>
       )}
