@@ -1,13 +1,16 @@
 import * as React from "react";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
-import { Link, CardMedia, CardContent, Container } from "@material-ui/core";
+import { Link, CardMedia, CardContent, Container, Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
+import { FeaturedSlider } from './Components/FeaturedSlider';
 import InfoDrawer from "../InfoDrawer/InfoDrawer";
+import ClearIcon from '@material-ui/icons/Clear';
+import CalendarIcon from '@material-ui/icons/CalendarToday';
 
 interface ILearningExperienceItem {
   isAssigned?: boolean;
@@ -15,6 +18,7 @@ interface ILearningExperienceItem {
   layout?: string;
   glow?: boolean;
   imagePath?: string;
+  description?: string;
   type: string;
   title: string;
   progress?: number;
@@ -25,7 +29,6 @@ interface ILearningExperienceItem {
 
 interface IFocusArea {
   name: string;
-  description: string;
   learningExperiences: ILearningExperienceItem[];
 }
 
@@ -46,6 +49,59 @@ export const Dashboard = ({
     setSelectedItem
   ] = React.useState<null | ILearningExperienceItem>(null);
 
+  const useStyles = makeStyles(() =>
+  createStyles({
+    closeIcon: {
+      fontSize: 32,
+      color: 'white',
+      border: 'solid 1px #333',
+      background: '#333',
+      borderRadius: '50%',
+      position: 'relative',
+      bottom: 220,
+      left: '90%',
+      cursor: 'pointer',
+    },
+    calendarIcon: {
+      fontSize: 22,
+      background: 'white',
+      color: '#717171',
+      margin: '0 auto',
+      display: 'block',
+      position: 'relative',
+      top: '20%',
+    },
+    progressBar: {
+      position: 'absolute',
+      left: '17%',
+      top: 15,
+      marginLeft: '20px',
+      background: '#fff',
+      height: 11,
+      borderRadius: 11,
+      width: '70%'    
+    },
+    launchButton: {
+      background: '#14b4ea',
+      width: '100%',
+      color: '#fff',
+      boxShadow: "0px 4px 2px -2px #9e9e9e",
+      '&:hover': {
+        background: 'rgba(20, 180, 234, 0.6)',
+      },
+    },
+    addButton: {
+      background: '#fff',
+      color: '#14b4ea',
+      width: '100%',
+      border: 'solid 1px #dcdcdc',
+      marginTop: 15,
+      boxShadow: "0px 4px 2px -2px #9e9e9e",
+    }
+  }),
+);
+  const classes = useStyles();
+
   return (
     <div dir={direction} style={{ background: "#efefef" }}>
       {selectedItem && (
@@ -54,16 +110,33 @@ export const Dashboard = ({
           open={isDrawerOpen}
           onClose={() => setIsDrawerOpen(false)}
         >
-          <CardMedia
-            image={selectedItem.imagePath}
-            style={{ paddingTop: "33%" }}
-          />
-          <CardContent>
-            <Typography variant="h1">{selectedItem.title}</Typography>
+          <CardMedia image={selectedItem.imagePath} style={{ paddingTop: "33%" }}>
+            <ClearIcon onClick={() => { setIsDrawerOpen(false);}} className={classes.closeIcon} />
+          </CardMedia>
+          <CardContent style={{ background: "#eaeaea" }}>
+            <div className="banner" style={{ margin: '0 auto', position: 'relative'}}>
+              <div className="due-date-container" style={{ width: 40, height: 40, borderRadius: '50%', background: 'white', boxShadow: '0px 5px 35px #636363', float: 'left' }}>
+                <CalendarIcon className={classes.calendarIcon} />
+              </div>
+              <Typography style={{ float: 'left', marginLeft: 10, fontWeight: 400, fontSize: 14, color: '#717171' }}>Due <br /> <strong>21/07/19</strong></Typography>
+              <div className={classes.progressBar}><p style={{ position: 'absolute', right: '-26px', top: '-19px'}}>0%</p></div>
+            </div>
           </CardContent>
+          <CardContent>
+              <Typography variant="h1" style={{ marginTop: 20 }}>{selectedItem.title}</Typography>
+              <Typography style={{ marginBottom: 20, marginTop: 5, fontWeight: 100, fontSize: 12 }}>{selectedItem.type}</Typography>
+              <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Typography>
+            </CardContent>
+            <CardContent>
+              <Button className={classes.launchButton}>LAUNCH CONTENT</Button>
+              <Button className={classes.addButton}>ADD TO</Button>
+            </CardContent>
         </InfoDrawer>
       )}
       <Header />
+      <FeaturedSlider>
+          <h1>HIIIIYYAAAAAA</h1>
+      </FeaturedSlider>
       <MyPlan>
         <Container>
           <Typography variant="h2" component="h1" gutterBottom>

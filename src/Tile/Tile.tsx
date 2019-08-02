@@ -190,7 +190,7 @@ const TileLabel = styled(({ color, ...other }) => <div {...other} />)`
 export const Tile = (props: ITileProps) => {
   const { layout, glow } = props;
   const theme = useTheme();
-  let label = null;
+  let label;
 
   if (props.isAssigned) {
     label = {
