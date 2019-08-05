@@ -27,7 +27,11 @@ export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
 
 export const LAYOUTS: {
-  [key: string]: { width: string; imagePadding: string; titleHeight: string };
+  [key: string]: {
+    width: string;
+    imagePadding: string;
+    titleHeight: string;
+  };
 } = {
   [LAYOUT_SLIM]: {
     width: "180px",
@@ -35,7 +39,7 @@ export const LAYOUTS: {
     titleHeight: "65px"
   },
   [LAYOUT_REGULAR]: {
-    width: "350px",
+    width: "380px",
     imagePadding: "36%",
     titleHeight: "40px"
   }
@@ -157,7 +161,7 @@ export const Tile = (props: ITileProps) => {
           }
         >
           <IconButton onClick={props.onClickInfo} aria-label="Info">
-            <Info />
+            <Info fontSize="inherit" />
           </IconButton>
         </TileInfoButton>
       )}
