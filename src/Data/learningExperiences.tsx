@@ -18,13 +18,19 @@ const lorem = new LoremIpsum({
 
 const makeProps = (props?: any) => {
   return {
-    type: props && props.type ? props.type : lorem.generateWords(2),
-    date: "2019/12/31",
-    title: props && props.title ? props.title : lorem.generateSentences(1),
-    isAssigned: props && props.isAssigned ? props.isAssigned : false,
-    isRecommended: props && props.isRecommended ? props.isRecommended : false,
+    type:
+      props && props.type !== undefined ? props.type : lorem.generateWords(2),
+    date: props && props.date !== undefined ? props.date : "2019/12/31",
+    title:
+      props && props.title !== undefined
+        ? props.title
+        : lorem.generateSentences(1),
+    isAssigned:
+      props && props.isAssigned !== undefined ? props.isAssigned : false,
+    isRecommended:
+      props && props.isRecommended !== undefined ? props.isRecommended : false,
     imagePath:
-      props && props.imagePath
+      props && props.imagePath !== undefined
         ? props.imagePath
         : "https://picsum.photos/id/" +
           Math.round(Math.random() * 50) +
@@ -43,15 +49,15 @@ const makeProps = (props?: any) => {
     },
     overlay: {
       title:
-        props && props.overlay && props.overlay.title
+        props && props.overlay !== undefined && props.overlay.title
           ? props.overlay.title
           : "Launch Course",
       subtitle:
-        props && props.overlay && props.overlay.subtitle
+        props && props.overlay !== undefined && props.overlay.subtitle
           ? props.overlay.subtitle
           : "Ends: 12/2/19",
       icon:
-        props && props.overlay && props.overlay.icon ? (
+        props && props.overlay !== undefined && props.overlay.icon ? (
           props.overlay.icon
         ) : (
           <SvgIcon>
@@ -63,9 +69,13 @@ const makeProps = (props?: any) => {
 };
 
 export const myPlanItems = [
+  makeProps({}),
+  makeProps({}),
+  makeProps({}),
   makeProps({
     isAssigned: true,
     type: "PDF",
+    title: "Blue Sky Thinking",
     progress: 20
   }),
   makeProps({
@@ -73,6 +83,7 @@ export const myPlanItems = [
     progress: 0,
     title: "アップルの新型ノートは予定通りに発表されるだろうか。",
     type: "Curatr Course",
+    date: "2018/11/02",
     overlay: {
       title: "Launch Content",
       subtitle: "Subtitle",

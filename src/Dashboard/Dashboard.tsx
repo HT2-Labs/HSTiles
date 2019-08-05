@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import Tile, { LAYOUT_SLIM, LAYOUT_REGULAR } from "../Tile";
 import {
   Link,
@@ -47,6 +48,14 @@ interface IDashboardProps {
   focusAreas: IFocusArea[];
 }
 
+const Banner = styled.div`
+  height: 300px;
+  width: 100%;
+  background: url(${(props: { url: string }) => props.url});
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
 export const Dashboard = ({
   direction,
   myPlanItems,
@@ -92,6 +101,7 @@ export const Dashboard = ({
         </InfoDrawer>
       )}
       <Header />
+      <Banner url="https://picsum.photos/1200/300" />
       <MyPlan>
         <Container>
           <Typography variant="h2" component="h1" gutterBottom>
@@ -100,9 +110,9 @@ export const Dashboard = ({
           <Slider>
             <SliderInner>
               {myPlanItems.map((itemProps, index) => {
-                const { onClickInfo, onClickTile, ...props } = itemProps;
+                const { onClickInfo, onClickTile, glow, ...props } = itemProps;
                 return (
-                  <SliderItem key={index}>
+                  <SliderItem key={index} margin="0 20px">
                     <Tile
                       onClickInfo={() => {
                         setSelectedItem(props);
@@ -114,6 +124,7 @@ export const Dashboard = ({
                         window.open("https://www.curatr3.com");
                       }}
                       layout={LAYOUT_REGULAR}
+                      glow={true}
                       {...props}
                     />
                   </SliderItem>
