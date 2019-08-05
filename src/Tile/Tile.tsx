@@ -22,6 +22,7 @@ import TileType from "./Components/TileType";
 import ProgressBar from "./Components/ProgressBar";
 import TileInfoButton from "./Components/TileInfoButton";
 import TileLabel from "./Components/TileLabel";
+import tileDateFormatter from "./Components/tileDateFormatter";
 
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
@@ -127,7 +128,7 @@ export const Tile = (props: ITileProps) => {
         <CardContent>
           <TileType variant="subtitle1">
             <EventIcon fontSize="inherit" style={{ marginRight: 4 }} />
-            {props.date}
+            {tileDateFormatter(props.date)}
           </TileType>
           <TileTitle layout={layout}>
             <TextTruncate
