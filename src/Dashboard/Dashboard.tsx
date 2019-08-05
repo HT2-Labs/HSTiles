@@ -11,8 +11,13 @@ import {
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
+import Timer from "@material-ui/icons/Timer";
+import VerifiedUser from "@material-ui/icons/VerifiedUser";
+import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
+
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
+import Badge from "./Components/Badge";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
 import InfoDrawer from "../InfoDrawer/InfoDrawer";
@@ -81,6 +86,17 @@ export const Dashboard = ({
             />
             <Typography variant="h1">{selectedItem.title}</Typography>
             <Typography variant="h2">{"abcdefg"}</Typography>
+            <Badge label="Duration" icon={<Timer />} />
+            <Badge label="Open Badge" icon={<VerifiedUser />} />
+            <Badge label="Certificate" icon={<BrightnessHigh />} />
+            <br />
+            <Button variant="contained" color="primary" fullWidth={true}>
+              continue course
+            </Button>
+            <br />
+            <Button variant="contained" color="secondary" fullWidth={true}>
+              add to
+            </Button>
           </CardContent>
         </InfoDrawer>
       )}
