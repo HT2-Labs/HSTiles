@@ -12,6 +12,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import EventIcon from "@material-ui/icons/Event";
 import curatrTheme from "../curatrTheme";
+import moment from "moment";
 
 import TileOverlay from "./Components/TileOverlay";
 import TileStatus from "./Components/TileStatus";
@@ -22,6 +23,7 @@ import TileType from "./Components/TileType";
 import ProgressBar from "./Components/ProgressBar";
 import TileInfoButton from "./Components/TileInfoButton";
 import TileLabel from "./Components/TileLabel";
+import tileDateFormatter from "./Components/tileDateFormatter";
 
 export const LAYOUT_SLIM = "layout_slim";
 export const LAYOUT_REGULAR = "layout_regular";
@@ -66,6 +68,9 @@ export const Tile = (props: ITileProps) => {
   const { layout, glow } = props;
   const theme = useTheme();
   let label = null;
+
+  const dateDif = moment(props.date).fromNow();
+  const inPast = dateDif.includes("ago");
 
   if (props.isAssigned) {
     label = {
@@ -125,9 +130,12 @@ export const Tile = (props: ITileProps) => {
           </TileImage>
         )}
         <CardContent>
-          <TileType variant="subtitle1">
+          <TileType
+            style={{ color: inPast ? "red" : "grey" }}
+            variant="subtitle1"
+          >
             <EventIcon fontSize="inherit" style={{ marginRight: 4 }} />
-            {props.date}
+            {tileDateFormatter(props.date)}
           </TileType>
           <TileTitle layout={layout}>
             <TextTruncate

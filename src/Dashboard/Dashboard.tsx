@@ -17,6 +17,8 @@ import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
 import Badge from "./Components/Badge";
+import CourseButton from "./Components/CourseButton";
+import AddButton from "./Components/AddButton";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
 import InfoDrawer from "../InfoDrawer/InfoDrawer";
@@ -81,13 +83,11 @@ export const Dashboard = ({
             <Badge label="Open Badge" icon={<VerifiedUser />} />
             <Badge label="Certificate" icon={<BrightnessHigh />} />
             <br />
-            <Button variant="contained" color="primary" fullWidth={true}>
-              continue course
-            </Button>
+            <CourseButton variant="contained">continue course</CourseButton>
             <br />
-            <Button variant="contained" color="secondary" fullWidth={true}>
+            <AddButton variant="contained" color="secondary" fullWidth={true}>
               add to
-            </Button>
+            </AddButton>
           </CardContent>
         </InfoDrawer>
       )}

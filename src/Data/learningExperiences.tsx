@@ -19,7 +19,7 @@ const lorem = new LoremIpsum({
 const makeProps = (props?: any) => {
   return {
     type: props && props.type ? props.type : lorem.generateWords(2),
-    date: "12/03/19",
+    date: "2019/12/31",
     title: props && props.title ? props.title : lorem.generateSentences(1),
     isAssigned: props && props.isAssigned ? props.isAssigned : false,
     isRecommended: props && props.isRecommended ? props.isRecommended : false,
