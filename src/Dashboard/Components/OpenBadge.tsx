@@ -2,27 +2,30 @@ import * as React from "react";
 import styled from "styled-components";
 
 const BadgeWrapper = styled.div`
-  color: #595757;
+  color: "black";
   background-color: #d1d1d1;
   padding: 10px;
-  padding-top: 13px;
+  padding-top: 18px;
   margin: 30px;
   border-radius: 500px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   text-align: center;
+  position: relative;
+  left: 60px;
+  bottom: 85px;
 `;
 
 const B2 = styled.div`
   margin: 10px;
   padding-right: 365px;
-  position: relative;
-  right: 30px;
   width: 450px;
   text-align: center;
+  position: relative;
+  right: 30px;
 `;
 
-export const Badge = ({ icon, label }) => {
+export const OpenBadge = ({ icon, label }) => {
   return (
     <BadgeWrapper>
       {icon}
@@ -31,4 +34,4 @@ export const Badge = ({ icon, label }) => {
   );
 };
 
-export default Badge;
+export default OpenBadge;

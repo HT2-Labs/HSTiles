@@ -5,8 +5,7 @@ import {
   CardMedia,
   CardContent,
   Container,
-  LinearProgress,
-  Button
+  LinearProgress
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
@@ -16,7 +15,11 @@ import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
 
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
-import Badge from "./Components/Badge";
+import CertificateBadge from "./Components/CertificateBadge";
+import DurationBadge from "./Components/DurationBadge";
+import OpenBadge from "./Components/OpenBadge";
+import CourseButton from "./Components/CourseButton";
+import AddButton from "./Components/AddButton";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
 import InfoDrawer from "../InfoDrawer/InfoDrawer";
@@ -76,18 +79,15 @@ export const Dashboard = ({
               variant="determinate"
             />
             <Typography variant="h1">{selectedItem.title}</Typography>
+            <br />
             <Typography variant="h2">{"abcdefg"}</Typography>
-            <Badge label="Duration" icon={<Timer />} />
-            <Badge label="Open Badge" icon={<VerifiedUser />} />
-            <Badge label="Certificate" icon={<BrightnessHigh />} />
-            <br />
-            <Button variant="contained" color="primary" fullWidth={true}>
-              continue course
-            </Button>
-            <br />
-            <Button variant="contained" color="secondary" fullWidth={true}>
+            <DurationBadge label="Duration" icon={<Timer />} />
+            <OpenBadge label="Open Badge" icon={<VerifiedUser />} />
+            <CertificateBadge label="Certificate" icon={<BrightnessHigh />} />
+            <CourseButton variant="contained">continue course</CourseButton>
+            <AddButton variant="contained" color="secondary" fullWidth={true}>
               add to
-            </Button>
+            </AddButton>
           </CardContent>
         </InfoDrawer>
       )}
