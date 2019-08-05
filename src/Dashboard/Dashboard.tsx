@@ -5,8 +5,7 @@ import {
   CardMedia,
   CardContent,
   Container,
-  LinearProgress,
-  Button
+  LinearProgress
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
@@ -17,6 +16,8 @@ import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
 import Badge from "./Components/Badge";
+import CourseButton from "./Components/CourseButton";
+import AddButton from "./Components/AddButton";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
 import InfoDrawer from "../InfoDrawer/InfoDrawer";
@@ -76,18 +77,19 @@ export const Dashboard = ({
               variant="determinate"
             />
             <Typography variant="h1">{selectedItem.title}</Typography>
-            <Typography variant="h2">{"abcdefg"}</Typography>
+            <br />
+            <Typography variant="h2">
+              {
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sollicitudin tempor id eu nisl nunc mi. Facilisi etiam dignissim diam quis enim. Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque. Neque volutpat ac tincidunt vitae semper quis."
+              }
+            </Typography>
             <Badge label="Duration" icon={<Timer />} />
             <Badge label="Open Badge" icon={<VerifiedUser />} />
             <Badge label="Certificate" icon={<BrightnessHigh />} />
-            <br />
-            <Button variant="contained" color="primary" fullWidth={true}>
-              continue course
-            </Button>
-            <br />
-            <Button variant="contained" color="secondary" fullWidth={true}>
+            <CourseButton variant="contained">continue course</CourseButton>
+            <AddButton variant="contained" color="secondary" fullWidth={true}>
               add to
-            </Button>
+            </AddButton>
           </CardContent>
         </InfoDrawer>
       )}
