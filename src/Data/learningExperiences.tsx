@@ -20,7 +20,7 @@ const makeProps = (props?: any) => {
   return {
     type:
       props && props.type !== undefined ? props.type : lorem.generateWords(2),
-    date: props && props.date !== undefined ? props.date : "2019/12/03",
+    date: props && props.date !== undefined ? props.date : "2019/12/31",
     title:
       props && props.title !== undefined
         ? props.title

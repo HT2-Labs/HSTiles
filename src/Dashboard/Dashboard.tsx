@@ -11,8 +11,10 @@ import {
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+
 import MyPlan from "./Components/MyPlan";
 import FocusAreaStream from "./Components/FocusAreaStream";
+import Badge from "./Components/Badge";
 import Header from "../Header";
 import Slider, { SliderInner, SliderItem } from "../Slider";
 import { FeaturedSlider } from './Components/FeaturedSlider';
